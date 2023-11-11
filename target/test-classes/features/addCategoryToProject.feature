@@ -13,7 +13,7 @@ Feature: As a user, I want to add a relationship categories with id of a project
 
         Examples:
           | project_id  | category_id |
-          | 50          | 51          |
+          | 2           | 1          |
 
 
 

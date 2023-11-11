@@ -1,43 +1,43 @@
-Feature: Adding a todo instance to a category
+Feature: As a user, I want to add a relationship todos with id of a category
     Background:
         Given the app is running
 
         #normal_flow
-        Scenario: Create a relationship between todo and category
-            //Given a category with title <category_title>, description <category_description>, and id <category_id>
-            //And a todo list with title <todo_title>, description <todo_description>, donestatus <completed> and id <todo_id>
-            When a user adds a relationship between a category with id <category_id> and a todo with id <todo_id>
-            Then a status code "201" with response phrase "Created" is returned
+        Scenario: Add a relationship between a specific category and already defined todo
+            #Given I have a project with ID "<category_id>"
+            #And I have a category with ID "<todo_id>"
+            When I request to add a relationship todos between categories "<category_id>" and todos "<todo_id>"
+            Then the relationship between category "<category_id>" todo "<todo_id>" should be created
 
             Examples:
-            | category_id   | category_title | category_description | todo_id  | todo_title | todo_description            | completed |
-            | 1           | engineering    | ecse429              | 2      | Part B     | complete gherkin scenarios  | false     |
+                | category_id  | todo_id     |
+                | 5            | 1           |
 
 
         #alternative_flow
-        Scenario: Create a relationship between a completed todo and category
-            //Given an existing category list with each item consisting of title <category_title>, description <category_description>, and id <category_id>
-            //And an existing todo list with each item consisting of title <todo_title>, description <todo_description>, donestatus <completed> and id <todo_id>
-            When a user adds a relationship between a category with id <category_id> and a todo with id <todo_id>
-            Then a status code "201" with response phrase "Created" is returned
+        Scenario: Add a relationship between a specific category and a created todo
+            #And I have a category with ID "<category_id>"
+            Given I create a todo with title "<title>", description "<description>"
+            When I request to add a relationship todos between categories "<category_id>" and todos "<todo_id>"
+            Then the relationship between category "<category_id>" todo "<todo_id>" should be created
 
             Examples:
-            | category_id | category_title  | category_description | todo_id | todo_title  | todo_description             | completed |
-            | 1           | Work Projects   | Ongoing tasks        | 3       | Task 1      | Complete task for project A  | true      |
-            | 2           | Personal Tasks  | Household chores     | 4       | Chores 1    | Grocery shopping             | true      |
+                | category_id  | title   | description | todo_id |
+                | 5            | testing | hello       | 1       |
 
         #error_flow
-        Scenario: Create a relationship between todo and category without id
-            //Given an existing category list with each item consisting of title <category_title>, description <category_description>, and id <category_id>
-            //And an existing todo list with each item consisting of title <todo_title>, description <todo_description>, donestatus <completed> and id <todo_id>
-            When a user creates a relationship with the category with id <category_id>
-            Then the relationship is not added
-            And a status code "400" with response phrase "Bad Request" is returned
+        Scenario: Add a relationship todos between a category and a non existent todo
+            #And I have a category with ID "<category_id>"
+            When I request to add a relationship todos between category "<category_id>" and a non existent todo with id "<todo_id>"
+            Then I get an error code "404"
+
+            Examples:
+                | category_id | todo_id |
+                | 1           | 999     |
 
 
 
 
-    
 
 
 
