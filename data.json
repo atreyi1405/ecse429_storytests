@@ -1,0 +1,22 @@
+{
+  "projects": [
+    {
+      "id": "6",
+      "title": "ecse429"
+    },
+    {
+      "id": "2",
+      "title": "ecse428"
+    }
+  ],
+  "categories": [
+    {
+      "id": "3",
+      "title": "partA"
+    },
+    {
+      "id": "4",
+      "title": "partB"
+    }
+  ]
+}

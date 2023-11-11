@@ -519,22 +519,46 @@ public class StepDefinitions {
 //            e.printStackTrace();
 //        }
 
-        JSONObject requestBody = new JSONObject();
-        requestBody.put("id", category_id);
-        //System.out.print(requestBody);
+//        JSONObject requestBody = new JSONObject();
+//        requestBody.put("id", category_id);
+//        //System.out.print(requestBody);
+//
+//        response=call.postRequest("projects?id=" + project_id + "/categories", "json", requestBody);
+//        //System.out.print(response);
+//
+//        try{
+//            URL url = new URL("http://localhost:4567/project/"+project_id);
+//            HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+//            int status_code = connection_url.getResponseCode();
+//            System.out.print(status_code);
+//            assertEquals(HttpURLConnection.HTTP_OK, status_code);
+//        }catch (IOException e){
+//            e.printStackTrace();
+//        }
 
-        response=call.postRequest("projects?id=" + project_id + "/categories", "json", requestBody);
-        //System.out.print(response);
+        HttpClient posttodo = HttpClient.newHttpClient();
 
-        try{
-            URL url = new URL("http://localhost:4567/project/"+project_id);
-            HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
-            int status_code = connection_url.getResponseCode();
-            System.out.print(status_code);
-            assertEquals(HttpURLConnection.HTTP_OK, status_code);
-        }catch (IOException e){
-            e.printStackTrace();
-        }
+        // XML data that we want to send
+        String xmlData = """
+            <project>
+                <active>""" + string4 + """
+                </active> 
+                <description> """ + string3 + """
+                </description>
+                <completed>""" + string2 + """
+                </completed>
+                <title>""" + string + """
+            </title>
+            </project>""";
+
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:4567/projects")) // Use the correct URL here
+                .header("Content-Type", "application/xml") // Set the header to accept XML
+                .POST(HttpRequest.BodyPublishers.ofString(xmlData)) // Use the XML data as the body of the POST request
+                .build();
+
+
+
 
 
 
@@ -559,20 +583,55 @@ public class StepDefinitions {
 
 
 
-
-
-
-
-
-
-
-
     }
 
 
 
 
+    @Given("I create a project with title {string}, completed {string}, description {string}, active {string}")
+    public void i_create_a_project_with_title_completed_description_active(String string, String string2, String string3, String string4) {
+        // Write code here that turns the phrase above into concrete actions
 
+        HttpClient posttodo = HttpClient.newHttpClient();
+
+        // XML data that we want to send
+        String xmlData = """
+            <project>
+                <active>""" + string4 + """
+                </active> 
+                <description> """ + string3 + """
+                </description>
+                <completed>""" + string2 + """
+                </completed>
+                <title>""" + string + """
+            </title>
+            </project>""";
+
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:4567/projects")) // Use the correct URL here
+                .header("Content-Type", "application/xml") // Set the header to accept XML
+                .POST(HttpRequest.BodyPublishers.ofString(xmlData)) // Use the XML data as the body of the POST request
+                .build();
+
+        try {
+            // Send the request and receive the response
+            HttpResponse<String> response = posttodo.send(req, HttpResponse.BodyHandlers.ofString());
+
+            // Get the status code from the response
+            int temp = response.statusCode();
+
+            // Convert the status code to String if needed
+            String add_status_code = Integer.toString(temp);
+
+            // Print out the status code
+            System.out.println("Status code: " + add_status_code);
+
+            // Optionally print the response body
+            System.out.println("Response body: " + response.body());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
 
