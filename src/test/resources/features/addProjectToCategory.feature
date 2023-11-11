@@ -1,39 +1,40 @@
-Feature: Adding a project instance to a category
+Feature: As a user, I want to add a relationship projects with id of a category
+    Background:
+      Given the app is running
 
-//Background: User is logged into the application 
+      #normal_flow
+      Scenario: Add a relationship between a specific category and already defined project
+        Given I have a category with ID "<category_id>"
+        And I have a project with ID "<project_id>"
+        When I request to add a relationship projects between categories "<category_id>" and projects "<project_id>"
+        Then the relationship between category "<category_id>" project "<project_id>" should be created
 
-#normal_flow
-Scenario: As a user, I want to class my project into a category
-    Given an existing category list with each item consisting of title <category_title>, description <category_description>, and id <category_id>
-    And an existing project list with each item consisting of title <project_title>, description <project_description>, donestatus <completed> and id <project_id>
-    When a user creates a relationship between the category with id <category_id> and the project with id <project_id>
-    Then the relationship named "projects" should be established between them
+        Examples:
+          | category_id  | project_id  |
+          | 6            | 2           |
 
-    Examples:
-      | category_id | category_title | category_description | project_id | project_title        | project_description            | completed |
-      | 1           | engineering    | ecse429              | 2          | Final Project        | software Validation            | false     |
+      #alternative_flow
+      Scenario: Add a relationship between a specific category and a created project
+          Given I have a category with ID "<category_id>"
+          And I create a project with title "<title>", completed "<completed>", description "<description>", active "<active>"
+          When I request to add a relationship projects between categories "<category_id>" and projects "<project_id>"
+          Then the relationship between category "<category_id>" project "<project_id>" should be created
+
+          Examples:
+            | category_id  | title | completed | description | active | project_id |
+            | 2            | title | true      | hero        | false  | 2          |
 
 
-#alternative_flow
-Scenario: As a user, I want to add a completed project item to a category so that I can view what has been done
-    Given an existing category list with each item consisting of title <category_title>, description <category_description>, and id <category_id>
-    And an existing project list with each item consisting of title <project_title>, description <project_description>, donestatus <completed> and id <project_id>
-    When a user creates a relationship between the category with id <category_id> and the project with id <project_id>
-    Then the relationship named "projects" should be established between them
-        
-    Examples:
-      | category_id | category_title | category_description | project_id | project_title        | project_description            | completed |
-      | 3           | engineering    | ecse429              | 4          | Homework assignments | In class homeworks             | true      |
 
-#error_flow
-Scenario: As a user, I want to class my project into a category
-    Given an existing category list with each item consisting of title <category_title>, description <category_description>, and id <category_id>
-    And an existing project list with each item consisting of title <project_title>, description <project_description>, donestatus <completed> and id <project_id>
-    When a user creates a relationship with the category with id <project_id>
-    Then this task fails since the project_id field is mandatory
+      #error_flow
+      Scenario: Add a relationship between a specific category and a non existent project
+          Given I have a category with ID "<category_id>"
+          When I request to add a relationship projects between category "<category_id>" and a non existent project with id "<projects_id>"
+          Then I get an error code "404"
 
-    Examples:
-    "Failed Validation: project_id: cannot be empty"
+          Examples:
+            | category_id | projects_id |
+            | 1           | 999         |
 
 
 

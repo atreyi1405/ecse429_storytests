@@ -690,6 +690,23 @@ public class StepDefinitions {
 
     }
 
+    @Given("I have a category with ID {string}")
+    public void i_have_a_category_with_id(String string) {
+        try {
+            URL url = new URL("http://localhost:4567/categories/" + string);
+            HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+            int status_code = connection_url.getResponseCode();
+            assertEquals(HttpURLConnection.HTTP_OK, status_code);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+//    @Given("I have a category with ID {string}")
+//    public void i_have_a_category_with_id(String string) {
+//        // Write code here that turns the phrase above into concrete actions
+//        throw new io.cucumber.java.PendingException();
+//    }
 
 //duplicate of ankur's
     @Then("I get an error code {string}")
@@ -697,6 +714,60 @@ public class StepDefinitions {
         // Write code here that turns the phrase above into concrete actions
         assertEquals(add_status_code,string);
     }
+
+    @Given("I create a project with title {string}, completed {string}, description {string}, active {string}")
+    public void i_create_a_project_with_title_completed_description_active(String string, String string2, String string3, String string4) {
+        // Write code here that turns the phrase above into concrete actions
+
+        HttpClient posttodo = HttpClient.newHttpClient();
+
+        // XML data that we want to send
+        String xmlData = """
+            <project>
+                <active>""" + string4 + """
+                </active>
+                <description> """ + string3 + """
+                </description>
+                <completed>""" + string2 + """
+                </completed>
+                <title>""" + string + """
+            </title>
+            </project>""";
+
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:4567/projects")) // Use the correct URL here
+                .header("Content-Type", "application/xml") // Set the header to accept XML
+                .POST(HttpRequest.BodyPublishers.ofString(xmlData)) // Use the XML data as the body of the POST request
+                .build();
+
+        try {
+            // Send the request and receive the response
+            HttpResponse<String> response = posttodo.send(req, HttpResponse.BodyHandlers.ofString());
+
+            // Get the status code from the response
+            int temp = response.statusCode();
+
+            // Convert the status code to String if needed
+            String add_status_code = Integer.toString(temp);
+
+            // Print out the status code
+            System.out.println("Status code: " + add_status_code);
+
+            // Optionally print the response body
+            System.out.println("Response body: " + response.body());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -971,6 +1042,150 @@ public class StepDefinitions {
             e.printStackTrace();
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+//deleteCategoryToProject
+    HttpResponse<String> response1;
+    @When("I request to delete the relationship between projects {string} and categories {string} relationship")
+    public void i_request_to_delete_the_relationship_between_projects_and_categories_relationship(String string, String string2) {
+
+        try {
+            HttpClient posttodo = HttpClient.newHttpClient();
+            HttpRequest req = HttpRequest.newBuilder().uri(URI.create("http://localhost:4567/projects/"+string+"/categories/"+string2)).DELETE().build();
+            HttpResponse<String> response = posttodo.send(req, HttpResponse.BodyHandlers.ofString());
+            response1 = response;
+            assertEquals(200, response.statusCode());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Then("the relationship between projects {string} and categories {string} should no longer exist")
+    public void the_relationship_between_projects_and_categories_should_no_longer_exist(String string, String string2) {
+        //int id = 5;
+        //int tasksofid = 1;
+        try {
+            HttpClient poster = HttpClient.newHttpClient();
+            HttpRequest req = HttpRequest.newBuilder().uri(URI.create("http://localhost:4567/projects/" + string + "/categories/" + string2)).DELETE().build();
+            HttpResponse<String> response = poster.send(req, HttpResponse.BodyHandlers.ofString());
+            assertEquals(HttpURLConnection.HTTP_NOT_FOUND, response.statusCode());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
+
+
+    //add project to Category
+
+    @When("I request to add a relationship projects between categories {string} and projects {string}")
+    public void i_request_to_add_a_relationship_projects_between_categories_and_projects(String string, String string2) {
+        HttpClient poster = HttpClient.newHttpClient();
+        HttpRequest req = HttpRequest.newBuilder().uri(URI.create("http://localhost:4567/categories/"+string+"/projects")).POST(HttpRequest.BodyPublishers.ofString("{\"id\":\""+string2+"\"}")).build();
+        try{
+            HttpResponse<String> response = poster.send(req, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+
+    @Then("the relationship between category {string} project {string} should be created")
+    public void the_relationship_between_category_project_should_be_created(String string, String string2) {
+        try {
+            URL url = new URL("http://localhost:4567/categories/" +string + "/projects");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            int status_code = connection.getResponseCode();
+            if (status_code == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine;
+                StringBuffer content = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    content.append(inputLine);
+                }
+                in.close();
+
+                JSONObject jsonResponse = new JSONObject(content.toString());
+                // Assuming the JSON object has a key called "id" for the ID
+
+// Get the JSON array associated with the key "projects"
+                JSONArray projects = jsonResponse.getJSONArray("projects");
+                String[] id = new String[1];
+// Loop through each object in the JSON array
+                for (int i = 0; i < projects.length(); i++) {
+                    // Get the individual project as a JSONObject
+                    JSONObject project = projects.getJSONObject(i);
+
+                    // Check if the project has an "id" key
+                    if (project.has("id")) {
+                        // Get the value of the "id" field
+                        id[0] = project.getString("id");
+
+                    }
+                }
+
+                // Now you have the ID as a string. To convert it into a JSON object:
+                temp= id[0];
+
+            } else {
+                System.out.print("failed");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(temp==string2){
+            assertEquals(200, HttpURLConnection.HTTP_OK);
+        }
+
+    }
+
+
+
+
+    @When("I request to add a relationship projects between category {string} and a non existent project with id {string}")
+    public void i_request_to_add_a_relationship_projects_between_category_and_a_non_existent_project_with_id(String string, String string2) {
+        //        // Write code here that turns the phrase above into concrete actions
+        try{
+            HttpClient poster = HttpClient.newHttpClient();
+            HttpRequest req = HttpRequest.newBuilder().uri(URI.create("http://localhost:4567/categories/"+string+"/projects")).POST(HttpRequest.BodyPublishers.ofString("{\"id\":\""+string2+"\"}")).build();
+            HttpResponse<String> response = poster.send(req, HttpResponse.BodyHandlers.ofString());
+            int temp = response.statusCode();
+            add_status_code = Integer.toString(temp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
