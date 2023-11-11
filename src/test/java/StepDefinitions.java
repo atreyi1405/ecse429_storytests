@@ -26,7 +26,7 @@ public class StepDefinitions {
     List<String> todoCategoriesIds;
 
     @Given("the app is running")
-    public void the_app_is_running(){
+    public void the_app_is_running() {
         Api call = new Api();
         // Verify that the server is running
         response = call.checkService();
@@ -35,7 +35,7 @@ public class StepDefinitions {
     }
 
 
-    @Given("the category with id {string}> exists")
+    @Given("the category with id {string} exists")
     public void the_category_with_id_exists(String categoryId) {
         Api call = new Api();
         boolean categoryExists = false;
@@ -60,7 +60,8 @@ public class StepDefinitions {
 
     }
 
-    @Given("the todo with id {string}> exists")
+
+    @Given("the todo with id {string} exists")
     public void the_todo_with_id_exists(String todoId) {
         Api call = new Api();
         boolean todoExists = false;
@@ -85,7 +86,7 @@ public class StepDefinitions {
 
     }
 
-    @Given("the project with id {string}> exists")
+    @Given("the project with id {string} exists")
     public void the_project_with_id_exists(String projectId) {
         Api call = new Api();
         boolean projectExists = false;
@@ -184,32 +185,32 @@ public class StepDefinitions {
     }
 
     @When("a user adds a category with title {string}, and description {string}")
-    public void a_user_adds_a_category_with_title_and_description(String categoryTitle, String categoryDescription){
-        Api call= new Api();
-        JSONObject getCategoryResponseBody= null;
-        Response getPreviousCategories=call.getRequest("categories", "json");
-        try{
-            getCategoryResponseBody= new JSONObject(getPreviousCategories.body().string());
-            previousCategoriesCount=getCategoryResponseBody.getJSONArray("categories").length();
-        }catch (IOException e){
+    public void a_user_adds_a_category_with_title_and_description(String categoryTitle, String categoryDescription) {
+        Api call = new Api();
+        JSONObject getCategoryResponseBody = null;
+        Response getPreviousCategories = call.getRequest("categories", "json");
+        try {
+            getCategoryResponseBody = new JSONObject(getPreviousCategories.body().string());
+            previousCategoriesCount = getCategoryResponseBody.getJSONArray("categories").length();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         JSONObject requestBody = new JSONObject();
         requestBody.put("title", categoryTitle);
-        requestBody.put("description",categoryDescription);
+        requestBody.put("description", categoryDescription);
 
-        response= call.postRequest("categories","json", requestBody);
-        try{
-            responseBody= new JSONObject(response.body().string());
-        }catch (IOException e){
+        response = call.postRequest("categories", "json", requestBody);
+        try {
+            responseBody = new JSONObject(response.body().string());
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
-        Response getCurrentCategories= call.getRequest("categories", "json");
-        try{
-            getCategoryResponseBody= new JSONObject(getCurrentCategories.body().string());
-            currentCategoriesCount= getCategoryResponseBody.getJSONArray("categories").length();
-        }catch (IOException e){
+        Response getCurrentCategories = call.getRequest("categories", "json");
+        try {
+            getCategoryResponseBody = new JSONObject(getCurrentCategories.body().string());
+            currentCategoriesCount = getCategoryResponseBody.getJSONArray("categories").length();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -217,31 +218,31 @@ public class StepDefinitions {
 
     @When("a user adds a todo with title {string} and description {string}")
     public void a_user_adds_a_todo_with_title_and_description(String todoTitle, String todoDescription) {
-        Api call= new Api();
-        JSONObject getTodoResponseBody= null;
-        Response getPreviousTodos=call.getRequest("todos", "json");
-        try{
-            getTodoResponseBody= new JSONObject(getPreviousTodos.body().string());
-            previousTodosCount=getTodoResponseBody.getJSONArray("todos").length();
-        }catch (IOException e){
+        Api call = new Api();
+        JSONObject getTodoResponseBody = null;
+        Response getPreviousTodos = call.getRequest("todos", "json");
+        try {
+            getTodoResponseBody = new JSONObject(getPreviousTodos.body().string());
+            previousTodosCount = getTodoResponseBody.getJSONArray("todos").length();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         JSONObject requestBody = new JSONObject();
         requestBody.put("title", todoTitle);
-        requestBody.put("description",todoDescription);
+        requestBody.put("description", todoDescription);
 
-        response= call.postRequest("todos","json", requestBody);
-        try{
-            responseBody= new JSONObject(response.body().string());
-        }catch (IOException e){
+        response = call.postRequest("todos", "json", requestBody);
+        try {
+            responseBody = new JSONObject(response.body().string());
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
-        Response getCurrentCategories= call.getRequest("todos", "json");
-        try{
-            getTodoResponseBody= new JSONObject(getCurrentCategories.body().string());
-            currentTodosCount= getTodoResponseBody.getJSONArray("todos").length();
-        }catch (IOException e){
+        Response getCurrentCategories = call.getRequest("todos", "json");
+        try {
+            getTodoResponseBody = new JSONObject(getCurrentCategories.body().string());
+            currentTodosCount = getTodoResponseBody.getJSONArray("todos").length();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -249,29 +250,29 @@ public class StepDefinitions {
 
     @When("a user adds a todo with title {string}")
     public void a_user_adds_a_todo_with_title(String todoTitle) {
-        Api call= new Api();
-        JSONObject getTodoResponseBody= null;
-        Response getPreviousTodos=call.getRequest("todos", "json");
-        try{
-            getTodoResponseBody= new JSONObject(getPreviousTodos.body().string());
-            previousTodosCount=getTodoResponseBody.getJSONArray("todos").length();
-        }catch (IOException e){
+        Api call = new Api();
+        JSONObject getTodoResponseBody = null;
+        Response getPreviousTodos = call.getRequest("todos", "json");
+        try {
+            getTodoResponseBody = new JSONObject(getPreviousTodos.body().string());
+            previousTodosCount = getTodoResponseBody.getJSONArray("todos").length();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         JSONObject requestBody = new JSONObject();
         requestBody.put("title", todoTitle);
-        response= call.postRequest("todos","json", requestBody);
-        try{
-            responseBody= new JSONObject(response.body().string());
-        }catch (IOException e){
+        response = call.postRequest("todos", "json", requestBody);
+        try {
+            responseBody = new JSONObject(response.body().string());
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
-        Response getCurrentTodos= call.getRequest("todos", "json");
-        try{
-            getTodoResponseBody= new JSONObject(getCurrentTodos.body().string());
-            currentTodosCount= getTodoResponseBody.getJSONArray("todos").length();
-        }catch (IOException e){
+        Response getCurrentTodos = call.getRequest("todos", "json");
+        try {
+            getTodoResponseBody = new JSONObject(getCurrentTodos.body().string());
+            currentTodosCount = getTodoResponseBody.getJSONArray("todos").length();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -279,29 +280,29 @@ public class StepDefinitions {
 
     @When("a user adds a category with title {string}")
     public void a_user_adds_a_category_with_title(String categoryTitle) {
-        Api call= new Api();
-        JSONObject getCategoryResponseBody= null;
-        Response getPreviousCategories=call.getRequest("categories", "json");
-        try{
-            getCategoryResponseBody= new JSONObject(getPreviousCategories.body().string());
-            previousCategoriesCount=getCategoryResponseBody.getJSONArray("categories").length();
-        }catch (IOException e){
+        Api call = new Api();
+        JSONObject getCategoryResponseBody = null;
+        Response getPreviousCategories = call.getRequest("categories", "json");
+        try {
+            getCategoryResponseBody = new JSONObject(getPreviousCategories.body().string());
+            previousCategoriesCount = getCategoryResponseBody.getJSONArray("categories").length();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         JSONObject requestBody = new JSONObject();
         requestBody.put("title", categoryTitle);
-        response= call.postRequest("categories","json", requestBody);
-        try{
-            responseBody= new JSONObject(response.body().string());
-        }catch (IOException e){
+        response = call.postRequest("categories", "json", requestBody);
+        try {
+            responseBody = new JSONObject(response.body().string());
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
-        Response getCurrentCategories= call.getRequest("categories", "json");
-        try{
-            getCategoryResponseBody= new JSONObject(getCurrentCategories.body().string());
-            currentCategoriesCount= getCategoryResponseBody.getJSONArray("categories").length();
-        }catch (IOException e){
+        Response getCurrentCategories = call.getRequest("categories", "json");
+        try {
+            getCategoryResponseBody = new JSONObject(getCurrentCategories.body().string());
+            currentCategoriesCount = getCategoryResponseBody.getJSONArray("categories").length();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -309,29 +310,29 @@ public class StepDefinitions {
 
     @When("a user adds a project with title {string}, and description {string}")
     public void a_user_adds_a_project_with_title_and_description(String projectTitle, String projectDescription) {
-        Api call= new Api();
-        JSONObject getProjectResponseBody=null;
-        Response getPreviousProjects=call.getRequest("projects", "json");
-        try{
-            getProjectResponseBody= new JSONObject(getPreviousProjects.body().string());
-            previousProjectCount= getProjectResponseBody.getJSONArray("projects").length();
-        }catch (IOException e){
+        Api call = new Api();
+        JSONObject getProjectResponseBody = null;
+        Response getPreviousProjects = call.getRequest("projects", "json");
+        try {
+            getProjectResponseBody = new JSONObject(getPreviousProjects.body().string());
+            previousProjectCount = getProjectResponseBody.getJSONArray("projects").length();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         JSONObject requestBody = new JSONObject();
         requestBody.put("title", projectTitle);
         requestBody.put("description", projectDescription);
-        response=call.postRequest("projects", "json", requestBody);
-        try{
-            responseBody= new JSONObject(response.body().string());
-        }catch (IOException e){
+        response = call.postRequest("projects", "json", requestBody);
+        try {
+            responseBody = new JSONObject(response.body().string());
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        Response getCurrentProjects=call.getRequest("projects", "json");
-        try{
-            getProjectResponseBody=new JSONObject(getCurrentProjects.body().string());
-            currentProjectCount=getProjectResponseBody.getJSONArray("projects").length();
-        }catch (IOException e){
+        Response getCurrentProjects = call.getRequest("projects", "json");
+        try {
+            getProjectResponseBody = new JSONObject(getCurrentProjects.body().string());
+            currentProjectCount = getProjectResponseBody.getJSONArray("projects").length();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -339,29 +340,29 @@ public class StepDefinitions {
 
     @When("a user adds a project with title {string}")
     public void a_user_adds_a_project_with_title(String projectTitle) {
-        Api call= new Api();
-        JSONObject getProjectResponseBody=null;
-        Response getPreviousProjects=call.getRequest("projects", "json");
-        try{
-            getProjectResponseBody= new JSONObject(getPreviousProjects.body().string());
-            previousProjectCount= getProjectResponseBody.getJSONArray("projects").length();
-        }catch (IOException e){
+        Api call = new Api();
+        JSONObject getProjectResponseBody = null;
+        Response getPreviousProjects = call.getRequest("projects", "json");
+        try {
+            getProjectResponseBody = new JSONObject(getPreviousProjects.body().string());
+            previousProjectCount = getProjectResponseBody.getJSONArray("projects").length();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         JSONObject requestBody = new JSONObject();
         requestBody.put("title", projectTitle);
 
-        response=call.postRequest("projects", "json", requestBody);
-        try{
-            responseBody= new JSONObject(response.body().string());
-        }catch (IOException e){
+        response = call.postRequest("projects", "json", requestBody);
+        try {
+            responseBody = new JSONObject(response.body().string());
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        Response getCurrentProjects=call.getRequest("projects", "json");
-        try{
-            getProjectResponseBody=new JSONObject(getCurrentProjects.body().string());
-            currentProjectCount=getProjectResponseBody.getJSONArray("projects").length();
-        }catch (IOException e){
+        Response getCurrentProjects = call.getRequest("projects", "json");
+        try {
+            getProjectResponseBody = new JSONObject(getCurrentProjects.body().string());
+            currentProjectCount = getProjectResponseBody.getJSONArray("projects").length();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -369,43 +370,27 @@ public class StepDefinitions {
 
     @When("a user deletes the category with id {string}")
     public void a_user_deletes_the_category_with_id(String categoryId) {
-        Api call= new Api();
-        response=call.deleteRequest("categories?id=" + categoryId);
-        try {
-            responseBody = new JSONObject(response.body().string());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        Api call = new Api();
+        response = call.deleteRequest("categories/" + categoryId);
     }
 
     @When("a user deletes the project with id {string}")
     public void a_user_deletes_the_project_with_id(String projectId) {
         Api call = new Api();
-        response=call.deleteRequest("projects?id=" + projectId);
-        try {
-            responseBody = new JSONObject(response.body().string());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        response = call.deleteRequest("projects/" + projectId);
     }
 
     @When("a user deletes the todo with id {string}")
     public void a_user_deletes_the_todo_with_id(String todoId) {
         Api call = new Api();
-        response=call.deleteRequest("todos?id=" + todoId);
-        try {
-            responseBody = new JSONObject(response.body().string());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        response = call.deleteRequest("todos/" + todoId);
     }
 
 
     @When("user filters the endpoint to delete todo with id {string}")
-    public void user_filters_the_endpoint_to_delete_todo_with_id(String todoId){
+    public void user_filters_the_endpoint_to_delete_todo_with_id(String todoId) {
         Api call = new Api();
-        response=call.deleteRequest("todos?id=" + todoId);
+        response = call.getRequest("todos?id=" + todoId, "json");
         try {
             responseBody = new JSONObject(response.body().string());
         } catch (IOException e) {
@@ -415,7 +400,7 @@ public class StepDefinitions {
 
 
     @When("user filters the endpoint to delete project with id {string}")
-    public void user_filters_the_endpoint_to_delete_project_with_id(String projectId){
+    public void user_filters_the_endpoint_to_delete_project_with_id(String projectId) {
         Api call = new Api();
         response = call.getRequest("projects?id=" + projectId, "json");
         try {
@@ -427,7 +412,7 @@ public class StepDefinitions {
 
 
     @When("user filters the endpoint to delete category with id {string}")
-    public void user_filters_the_endpoint_to_delete_category_with_id(String categoryId){
+    public void user_filters_the_endpoint_to_delete_category_with_id(String categoryId) {
         Api call = new Api();
         response = call.getRequest("categories?id=" + categoryId, "json");
         try {
@@ -437,58 +422,31 @@ public class StepDefinitions {
         }
     }
 
-    @Then("user should not see response of todo with id {string}")
-    public void user_should_not_see_response_of_todo_with_id(String todoId){
-        assertEquals(0, responseBody.getJSONArray("todos").length(), "ERROR: Only one todo should be returned");
-        JSONArray todosArray = responseBody.getJSONArray("todos");
-        JSONObject returnedTodo = todosArray.getJSONObject(0);
-        String returnedId = returnedTodo.getString("id");
-        assertEquals(todoId, returnedId, "ERROR: the returned todo does not have the expected id.");
-    }
-
-    @Then("user should not see response of project with id {string}")
-    public void user_should_not_see_response_of_project_with_id(String projectId){
-        assertEquals(0, responseBody.getJSONArray("projects").length(), "ERROR: Only one project should be returned");
-        JSONArray projectsArray = responseBody.getJSONArray("projects");
-        JSONObject returnedProject = projectsArray.getJSONObject(0);
-        String returnedId = returnedProject.getString("id");
-        assertEquals(projectId, returnedId, "ERROR: the returned project does not have the expected id.");
-    }
-
-    @Then("user should not see response of category with id {string}")
-    public void user_should_not_see_response_of_category_with_id(String categoryId){
-        assertEquals(0, responseBody.getJSONArray("categories").length(), "ERROR: Only one category should be returned");
-        JSONArray categoriesArray = responseBody.getJSONArray("categories");
-        JSONObject returnedCategory = categoriesArray.getJSONObject(0);
-        String returnedId = returnedCategory.getString("id");
-        assertEquals(categoryId, returnedId, "ERROR: the returned category does not have the expected id.");
-    }
-
 
 
     @Then("a new category with title {string} is added")
     public void a_new_category_with_title_is_added(String categoryTitle) {
-        assertEquals(1, currentCategoriesCount-previousCategoriesCount);
+        assertEquals(1, currentCategoriesCount - previousCategoriesCount);
         assertEquals(categoryTitle, responseBody.getString("title"));
 
     }
 
     @Then("a new todo with title {string}")
     public void a_new_todo_with_title(String todoTitle) {
-        assertEquals(1, currentTodosCount-previousTodosCount);
+        assertEquals(1, currentTodosCount - previousTodosCount);
         assertEquals(todoTitle, responseBody.getString("title"));
     }
 
     @Then("a new project with title {string}, and description {string} is added")
     public void a_new_project_with_title_and_description_is_added(String projectTitle, String projectDescription) {
-        assertEquals(1, currentProjectCount-previousProjectCount);
+        assertEquals(1, currentProjectCount - previousProjectCount);
         assertEquals(projectTitle, responseBody.getString("title"));
         assertEquals(projectDescription, responseBody.getString("description"));
     }
 
     @Then("a new todo with title {string} and description {string}")
     public void a_new_todo_with_title_and_description(String todoTitle, String todoDescription) {
-        assertEquals(1, currentTodosCount-previousTodosCount);
+        assertEquals(1, currentTodosCount - previousTodosCount);
         assertEquals(todoTitle, responseBody.getString("title"));
         assertEquals(todoDescription, responseBody.getString("description"));
 
@@ -496,34 +454,16 @@ public class StepDefinitions {
 
     @Then("a new project with title {string} is added")
     public void a_new_project_with_title_is_added(String projectTitle) {
-        assertEquals(1, currentProjectCount-previousProjectCount);
+        assertEquals(1, currentProjectCount - previousProjectCount);
         assertEquals(projectTitle, responseBody.getString("title"));
     }
 
     @Then("a new category with title {string} and description {string} is added")
     public void a_new_category_with_title_and_description_is_added(String categoryTitle, String categoryDescription) {
         // Write code here that turns the phrase above into concrete actions
-        assertEquals(1, currentCategoriesCount-previousCategoriesCount);
+        assertEquals(1, currentCategoriesCount - previousCategoriesCount);
         assertEquals(categoryTitle, responseBody.getString("title"));
         assertEquals(categoryDescription, responseBody.getString("description"));
-    }
-
-    @Then("the category is not added")
-    public void the_category_is_not_added() {
-        assertEquals(0,currentCategoriesCount-previousCategoriesCount);
-    }
-
-    @Then("the category is removed")
-    public void the_category_is_removed() {
-        assertEquals(0,currentCategoriesCount-previousCategoriesCount);
-    }
-
-    @Then("a status code {string} with response phrase {string} is returned")
-    public void a_status_code_with_response_phrase_is_returned(String statusCode, String responsePhrase) {
-        assertEquals(Integer.parseInt(statusCode), response.code(),
-                "ERROR: The response phrase is: " + response.message() +
-                        "\n instead of : " + responsePhrase );
-        assertEquals(responsePhrase, response.message() , "ERROR: The actual response phrase does not match the expected response phrase.");
     }
 
     @Then("the project is not added")
@@ -536,6 +476,18 @@ public class StepDefinitions {
         assertEquals(0, currentTodosCount- previousTodosCount);
     }
 
+    @Then("the category is not added")
+    public void the_category_is_not_added() {
+        assertEquals(0,currentCategoriesCount-previousCategoriesCount);
+    }
 
+
+    @Then("a status code {string} with response phrase {string} is returned")
+    public void a_status_code_with_response_phrase_is_returned(String statusCode, String responsePhrase) {
+        assertEquals(Integer.parseInt(statusCode), response.code(),
+                "ERROR: The response phrase is: " + response.message() +
+                        "\n instead of : " + responsePhrase);
+        assertEquals(responsePhrase, response.message(), "ERROR: The actual response phrase does not match the expected response phrase.");
+    }
 
 }

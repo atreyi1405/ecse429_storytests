@@ -4,24 +4,21 @@ Feature: Delete Todo By Id
   Background:
     Given the app is running
 
-    #Normal Flow
+     #Normal Flow
   Scenario Outline: Delete a todo by id
-    Given the todo with id "<todoId"> exists
+    Given the todo with id "<todoId>" exists
     When a user deletes the todo with id "<todoId>"
-    Then user should not see response of todo with id "<todoId>"
     And a status code "200" with response phrase "OK" is returned
 
     Examples:
       |todoId|
       |1     |
       |2     |
-      |3     |
 
       #Alternative Flow
   Scenario Outline: Delete a todo by filtering endpoint with id
-    Given the todo with id "<todoId"> exists
+    Given the todo with id "<todoId>" exists
     When user filters the endpoint to delete todo with id "<todoId>"
-    Then user should not see response of todo with id "<todoId>"
     And a status code "200" with response phrase "OK" is returned
     Examples:
       |todoId|

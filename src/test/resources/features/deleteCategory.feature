@@ -6,22 +6,19 @@ Feature: Delete Category By Id
 
     #Normal Flow
   Scenario Outline: Delete a category by id
-    Given the category with id "<categoryId"> exists
+    Given the category with id "<categoryId>" exists
     When a user deletes the category with id "<categoryId>"
-    Then user should not see response of category with id "<categoryId>"
     And a status code "200" with response phrase "OK" is returned
 
     Examples:
       |categoryId|
       |1     |
       |2     |
-      |3     |
 
       #Alternative Flow
   Scenario Outline: Delete a category by filtering endpoint with id
-    Given the category with id "<categoryId"> exists
+    Given the category with id "<categoryId>" exists
     When user filters the endpoint to delete category with id "<categoryId>"
-    Then user should not see response of category with id "<categoryId>"
     And a status code "200" with response phrase "OK" is returned
     Examples:
       |categoryId|

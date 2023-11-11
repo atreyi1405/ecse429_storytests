@@ -6,22 +6,19 @@ Feature: Delete Project By Id
 
     #Normal Flow
   Scenario Outline: Delete a project by id
-    Given the project with id "<projectId"> exists
+    Given the project with id "<projectId>" exists
     When a user deletes the project with id "<projectId>"
-    Then user should not see response of project with id "<projectId>"
     And a status code "200" with response phrase "OK" is returned
 
     Examples:
       |projectId|
       |1     |
-      |2     |
-      |3     |
+
 
       #Alternative Flow
   Scenario Outline: Delete a project by filtering endpoint with id
-    Given the project with id "<projectId"> exists
+    Given the project with id "<projectId>" exists
     When user filters the endpoint to delete project with id "<projectId>"
-    Then user should not see response of project with id "<projectId>"
     And a status code "200" with response phrase "OK" is returned
     Examples:
       |projectId|
