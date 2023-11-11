@@ -662,6 +662,49 @@ public class StepDefinitions {
 //    }
 
 
+
+
+
+
+
+
+
+
+
+
+    String add_status_code;
+    //DONT HAVE TO COPY, IS A DUPLICATE OF ANKUR'S
+    @Given("I have a project with ID {string}")
+    public void i_have_a_project_with_id(String string) {
+//        // Write code here that turns the phrase above into concrete actions
+        try {
+            URL url = new URL("http://localhost:4567/projects/" + string);
+            HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+            int status_code = connection_url.getResponseCode();
+            assertEquals(HttpURLConnection.HTTP_OK, status_code);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+
+//duplicate of ankur's
+    @Then("I get an error code {string}")
+    public void i_get_an_error_code(String string) {
+        // Write code here that turns the phrase above into concrete actions
+        assertEquals(add_status_code,string);
+    }
+
+
+
+
+
+
+    
+    //my methods
+
+
     @When("I request to add a relationship categories between project {string} and categories {string}")
     public void i_request_to_add_a_relationship_categories_between_project_and_categories(String string, String string2) {
         HttpClient poster = HttpClient.newHttpClient();
@@ -691,8 +734,56 @@ public class StepDefinitions {
 
     @Given("I create a category with title {string}, description {string}")
     public void i_create_a_category_with_title_description(String string, String string2) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        HttpClient poster = HttpClient.newHttpClient();
+
+        // XML data that we want to send
+        String xmlData = """
+            <category>
+                <description> """ + string2 + """
+                </description>
+                <title>""" + string + """
+            </title>
+            </category>""";
+
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:4567/categories")) // Use the correct URL here
+                .header("Content-Type", "application/xml") // Set the header to accept XML
+                .POST(HttpRequest.BodyPublishers.ofString(xmlData)) // Use the XML data as the body of the POST request
+                .build();
+
+        try {
+            // Send the request and receive the response
+            HttpResponse<String> response = poster.send(req, HttpResponse.BodyHandlers.ofString());
+
+            // Get the status code from the response
+            int temp = response.statusCode();
+
+            // Convert the status code to String if needed
+            String add_status_code = Integer.toString(temp);
+
+            // Print out the status code
+            System.out.println("Status code: " + add_status_code);
+
+            // Optionally print the response body
+            System.out.println("Response body: " + response.body());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    String temp;
+    @When("I request to add a relationship categories between project {string} and a non existent category with id {string}")
+    public void i_request_to_add_a_relationship_categories_between_project_and_a_non_existent_category_with_id(String string, String string2) {
+        //        // Write code here that turns the phrase above into concrete actions
+        try{
+            HttpClient poster = HttpClient.newHttpClient();
+            HttpRequest req = HttpRequest.newBuilder().uri(URI.create("http://localhost:4567/projects/"+string+"/categories")).POST(HttpRequest.BodyPublishers.ofString("{\"id\":\""+string2+"\"}")).build();
+            HttpResponse<String> response = poster.send(req, HttpResponse.BodyHandlers.ofString());
+            int temp = response.statusCode();
+            add_status_code = Integer.toString(temp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -700,35 +791,10 @@ public class StepDefinitions {
 
 
 
-//    @When("a user adds a project with title {string}")
-//    public void a_user_adds_a_project_with_title(String projectTitle) {
-//        Api call= new Api();
-//        JSONObject getProjectResponseBody=null;
-//        Response getPreviousProjects=call.getRequest("projects", "json");
-//        try{
-//            getProjectResponseBody= new JSONObject(getPreviousProjects.body().string());
-//            previousProjectCount= getProjectResponseBody.getJSONArray("projects").length();
-//        }catch (IOException e){
-//            e.printStackTrace();
-//        }
-//        JSONObject requestBody = new JSONObject();
-//        requestBody.put("title", projectTitle);
-//
-//        response=call.postRequest("projects", "json", requestBody);
-//        try{
-//            responseBody= new JSONObject(response.body().string());
-//        }catch (IOException e){
-//            e.printStackTrace();
-//        }
-//        Response getCurrentProjects=call.getRequest("projects", "json");
-//        try{
-//            getProjectResponseBody=new JSONObject(getCurrentProjects.body().string());
-//            currentProjectCount=getProjectResponseBody.getJSONArray("projects").length();
-//        }catch (IOException e){
-//            e.printStackTrace();
-//        }
-//
-//    }
+
+
+
+
 
 
 

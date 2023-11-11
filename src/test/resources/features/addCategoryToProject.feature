@@ -20,21 +20,24 @@ Feature: As a user, I want to add a relationship categories with id of a project
 
     #alternative_flow
     Scenario: Add a relationship between a specific project and a created category
-        //Given an existing project list with each item consisting of title <project_title>, description <project_description>, donestatus <completed> and id <project_id>
+        #Given I have a project with ID "<project_id>"
         Given I create a category with title "<title>", description "<description>"
-        When a user adds a relationship between project with id <project_id> and the category with id <category_id>
-        Then the relationship named "categories" should be established between them
+        When I request to add a relationship categories between project "<project_id>" and categories "<category_id>"
+        Then the relationship between project "<project_id>" category "<category_id>" should be created
 
          Examples:
-          | project_id  | project_title     | project_description   | completed | category_id | category_title | category_description            |
-          | 8           | Final Project     | Software Validation   | true      | 9           | Part A         | Exploratory testing of rest API |
+           | project_id  | title   | description | category_id |
+           | 2           | testing | hero        |  3          |
 
     #error_flow
-    Scenario: As a user, I want to class my category into a project
-        //Given an existing project list with each item consisting of title <project_title>, description <project_description>, donestatus <completed> and id <project_id>
-        //And an existing category list with each item consisting of title <category_title>, description <category_description>, and id <category_id>
-        When a user creates a relationship between project with id <project_id>
-        Then this task fails since the category_id field is mandatory
+    Scenario: Add a relationship categories between a project and a non existent category
+        #Given I have a project with ID "<project_id>"
+        When I request to add a relationship categories between project "<project_id>" and a non existent category with id "<category>"
+        Then I get an error code "404"
+
+      Examples:
+        | project_id | category_id |
+        | 1          | 999         |
 
 
 
