@@ -502,142 +502,198 @@ public class StepDefinitions {
     }
 
 
-    @When("a user adds a relationship between project with id {int} and the category with id {int}")
-    public void a_user_adds_a_relationship_between_project_with_id_and_the_category_with_id(Integer project_id, Integer category_id) {
-
-        Api call= new Api();
-        JSONObject getCategoryTodoResponseBody =null;
-//        Response getPreviousCategoryTodo=call.getRequest("categories?id=" + category_id + "/todos", "json");
-        //Response getPreviousCategoryTodo=call.getRequest("todos", "json");
-
-//        try {
-//            getCategoryTodoResponseBody = new JSONObject(getPreviousCategoryTodo.body().string());
-//            //System.out.print(getCategoryTodoResponseBody);
-//            previousCategoryTodoCount= getCategoryTodoResponseBody.getJSONArray("todos").length();
-//            //System.out.print(previousCategoryTodoCount);
-//        }catch (IOException e){
-//            e.printStackTrace();
-//        }
-
-//        JSONObject requestBody = new JSONObject();
-//        requestBody.put("id", category_id);
-//        //System.out.print(requestBody);
+//    @When("a user adds a relationship between project with id {int} and the category with id {int}")
+//    public void a_user_adds_a_relationship_between_project_with_id_and_the_category_with_id(Integer project_id, Integer category_id) {
 //
-//        response=call.postRequest("projects?id=" + project_id + "/categories", "json", requestBody);
-//        //System.out.print(response);
+//        Api call= new Api();
+//        JSONObject getCategoryTodoResponseBody =null;
+////        Response getPreviousCategoryTodo=call.getRequest("categories?id=" + category_id + "/todos", "json");
+//        //Response getPreviousCategoryTodo=call.getRequest("todos", "json");
+//
+////        try {
+////            getCategoryTodoResponseBody = new JSONObject(getPreviousCategoryTodo.body().string());
+////            //System.out.print(getCategoryTodoResponseBody);
+////            previousCategoryTodoCount= getCategoryTodoResponseBody.getJSONArray("todos").length();
+////            //System.out.print(previousCategoryTodoCount);
+////        }catch (IOException e){
+////            e.printStackTrace();
+////        }
+//
+////        JSONObject requestBody = new JSONObject();
+////        requestBody.put("id", category_id);
+////        //System.out.print(requestBody);
+////
+////        response=call.postRequest("projects?id=" + project_id + "/categories", "json", requestBody);
+////        //System.out.print(response);
+////
+////        try{
+////            URL url = new URL("http://localhost:4567/project/"+project_id);
+////            HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+////            int status_code = connection_url.getResponseCode();
+////            System.out.print(status_code);
+////            assertEquals(HttpURLConnection.HTTP_OK, status_code);
+////        }catch (IOException e){
+////            e.printStackTrace();
+////        }
+//
+//        HttpClient posttodo = HttpClient.newHttpClient();
+//
+//        // XML data that we want to send
+//        String xmlData = """
+//            <project>
+//                <active>""" + string4 + """
+//                </active>
+//                <description> """ + string3 + """
+//                </description>
+//                <completed>""" + string2 + """
+//                </completed>
+//                <title>""" + string + """
+//            </title>
+//            </project>""";
+//
+//        HttpRequest req = HttpRequest.newBuilder()
+//                .uri(URI.create("http://localhost:4567/projects")) // Use the correct URL here
+//                .header("Content-Type", "application/xml") // Set the header to accept XML
+//                .POST(HttpRequest.BodyPublishers.ofString(xmlData)) // Use the XML data as the body of the POST request
+//                .build();
+//
+//
+//
+//
+//
 //
 //        try{
-//            URL url = new URL("http://localhost:4567/project/"+project_id);
-//            HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
-//            int status_code = connection_url.getResponseCode();
-//            System.out.print(status_code);
-//            assertEquals(HttpURLConnection.HTTP_OK, status_code);
+//            responseBody= new JSONObject(response.body().string());
 //        }catch (IOException e){
 //            e.printStackTrace();
 //        }
-
-        HttpClient posttodo = HttpClient.newHttpClient();
-
-        // XML data that we want to send
-        String xmlData = """
-            <project>
-                <active>""" + string4 + """
-                </active> 
-                <description> """ + string3 + """
-                </description>
-                <completed>""" + string2 + """
-                </completed>
-                <title>""" + string + """
-            </title>
-            </project>""";
-
-        HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:4567/projects")) // Use the correct URL here
-                .header("Content-Type", "application/xml") // Set the header to accept XML
-                .POST(HttpRequest.BodyPublishers.ofString(xmlData)) // Use the XML data as the body of the POST request
-                .build();
+//        Response getCurrentProjects=call.getRequest("projects?id=" + project_id + "/categories", "json");
+//        System.out.print(getCurrentProjects);
+//
+//        JSONObject getTodoResponseBody = new JSONObject(getCurrentProjects.body());
+//        //System.out.print(getTodoResponseBody);
+//
+//        try{
+//            getCategoryTodoResponseBody=new JSONObject(getCurrentProjects.body().string());
+//            currentProjectCount=getCategoryTodoResponseBody.getJSONArray("projects?id=" + project_id + "/categories").length();
+//            //System.out.print(currentProjectCount);
+//        }catch (IOException e){
+//            e.printStackTrace();
+//        }
+//
+//
+//
+//    }
 
 
 
 
+//    @Given("I create a project with title {string}, completed {string}, description {string}, active {string}")
+//    public void i_create_a_project_with_title_completed_description_active(String string, String string2, String string3, String string4) {
+//        // Write code here that turns the phrase above into concrete actions
+//
+//        HttpClient posttodo = HttpClient.newHttpClient();
+//
+//        // XML data that we want to send
+//        String xmlData = """
+//            <project>
+//                <active>""" + string4 + """
+//                </active>
+//                <description> """ + string3 + """
+//                </description>
+//                <completed>""" + string2 + """
+//                </completed>
+//                <title>""" + string + """
+//            </title>
+//            </project>""";
+//
+//        HttpRequest req = HttpRequest.newBuilder()
+//                .uri(URI.create("http://localhost:4567/projects")) // Use the correct URL here
+//                .header("Content-Type", "application/xml") // Set the header to accept XML
+//                .POST(HttpRequest.BodyPublishers.ofString(xmlData)) // Use the XML data as the body of the POST request
+//                .build();
+//
+//        try {
+//            // Send the request and receive the response
+//            HttpResponse<String> response = posttodo.send(req, HttpResponse.BodyHandlers.ofString());
+//
+//            // Get the status code from the response
+//            int temp = response.statusCode();
+//
+//            // Convert the status code to String if needed
+//            String add_status_code = Integer.toString(temp);
+//
+//            // Print out the status code
+//            System.out.println("Status code: " + add_status_code);
+//
+//            // Optionally print the response body
+//            System.out.println("Response body: " + response.body());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 
+//    @When("a user adds a relationship between project with id {int} and the category with id {int}")
+//    public void a_user_adds_a_relationship_between_project_with_id_and_the_category_with_id(Integer project_id, Integer category_id) {
+//        HttpClient postCategory = HttpClient.newHttpClient();
+//        HttpRequest req = HttpRequest.newBuilder().uri(URI.create("http://localhost:4567/project/"+project_id+"/tasksof")).POST(HttpRequest.BodyPublishers.ofString("{\"id\":\""+string2+"\"}")).build();
+//        HttpResponse<String> response = posttodo.send(req, HttpResponse.BodyHandlers.ofString());
+//
+//    }
+
+//
+//    @Given("I have a project with ID {string}")
+//    public void i_have_a_project_with_id(String string) throws IOException {
+//        // Write code here that turns the phrase above into concrete actions
+//        URL url = new URL("http://localhost:4567/projects/"+string);
+//        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+//        int status_code = connection_url.getResponseCode();
+//        assertEquals(HttpURLConnection.HTTP_OK, status_code);
+//    }
+
+
+//    @When("I request to add a relationship tasksof between todo {string} and projects {string}")
+//    public void i_request_to_add_a_relationship_between_todo_and_tasksof(String string, String string2) throws IOException, InterruptedException {
+//        // Write code here that turns the phrase above into concrete actions
+//        HttpClient posttodo = HttpClient.newHttpClient();
+//        HttpRequest req = HttpRequest.newBuilder().uri(URI.create("http://localhost:4567/todos/"+string+"/tasksof")).POST(HttpRequest.BodyPublishers.ofString("{\"id\":\""+string2+"\"}")).build();
+//        HttpResponse<String> response = posttodo.send(req, HttpResponse.BodyHandlers.ofString());
+//    }
+
+
+    @When("I request to add a relationship categories between project {string} and categories {string}")
+    public void i_request_to_add_a_relationship_categories_between_project_and_categories(String string, String string2) {
+        HttpClient poster = HttpClient.newHttpClient();
+        HttpRequest req = HttpRequest.newBuilder().uri(URI.create("http://localhost:4567/projects/"+string+"/categories")).POST(HttpRequest.BodyPublishers.ofString("{\"id\":\""+string2+"\"}")).build();
         try{
-            responseBody= new JSONObject(response.body().string());
-        }catch (IOException e){
+            HttpResponse<String> response = poster.send(req, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e){
             e.printStackTrace();
         }
-        Response getCurrentProjects=call.getRequest("projects?id=" + project_id + "/categories", "json");
-        System.out.print(getCurrentProjects);
-
-        JSONObject getTodoResponseBody = new JSONObject(getCurrentProjects.body());
-        //System.out.print(getTodoResponseBody);
-
-        try{
-            getCategoryTodoResponseBody=new JSONObject(getCurrentProjects.body().string());
-            currentProjectCount=getCategoryTodoResponseBody.getJSONArray("projects?id=" + project_id + "/categories").length();
-            //System.out.print(currentProjectCount);
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-
-
-
     }
 
 
-
-
-    @Given("I create a project with title {string}, completed {string}, description {string}, active {string}")
-    public void i_create_a_project_with_title_completed_description_active(String string, String string2, String string3, String string4) {
-        // Write code here that turns the phrase above into concrete actions
-
-        HttpClient posttodo = HttpClient.newHttpClient();
-
-        // XML data that we want to send
-        String xmlData = """
-            <project>
-                <active>""" + string4 + """
-                </active> 
-                <description> """ + string3 + """
-                </description>
-                <completed>""" + string2 + """
-                </completed>
-                <title>""" + string + """
-            </title>
-            </project>""";
-
-        HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:4567/projects")) // Use the correct URL here
-                .header("Content-Type", "application/xml") // Set the header to accept XML
-                .POST(HttpRequest.BodyPublishers.ofString(xmlData)) // Use the XML data as the body of the POST request
-                .build();
-
+    @Then("the relationship between project {string} category {string} should be created")
+    public void the_relationship_between_project_category_should_be_created(String string, String string2) {
         try {
-            // Send the request and receive the response
-            HttpResponse<String> response = posttodo.send(req, HttpResponse.BodyHandlers.ofString());
-
-            // Get the status code from the response
-            int temp = response.statusCode();
-
-            // Convert the status code to String if needed
-            String add_status_code = Integer.toString(temp);
-
-            // Print out the status code
-            System.out.println("Status code: " + add_status_code);
-
-            // Optionally print the response body
-            System.out.println("Response body: " + response.body());
-        } catch (Exception e) {
+            URL url = new URL("http://localhost:4567/projects/" + string + "/categories");
+            HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+            int status_code = connection_url.getResponseCode();
+            assertEquals(HttpURLConnection.HTTP_OK, status_code);
+        } catch (Exception e){
             e.printStackTrace();
         }
+
     }
 
 
 
-
-
-
+    @Given("I create a category with title {string}, description {string}")
+    public void i_create_a_category_with_title_description(String string, String string2) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
 
 
 
