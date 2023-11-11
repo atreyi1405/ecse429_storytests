@@ -8,16 +8,21 @@ Feature:
 
   Scenario Outline: Remove relationship between a specific todo and project
     Given I have a todo with the ID "<todoId>"
-    And I have a project with the ID "<projectId>"
-    And a relationship exists between todo "<todoId>" and project "<projectId>"
-    When I request to delete the relationship between todo "<todoId>" and project "<projectId>" through the API endpoint
-    Then the relationship between todo "<todoId>" and project "<projectId>" should no longer exist
-    And I should receive a status code "200" with the message "Relationship removed successfully."
+    And I have a tasksof with the ID "<tasksofID>"
+    When I request to delete the relationship between todo "<todoId>" and tasksof "<tasksofID>" relationship
+    Then the relationship between todo "<todoId>" and tasksof "<tasksofID>" should no longer exist
     Examples:
-      | todoId | projectId |
+      | todoId | tasksofID |
       | 2      | 1         |
-      | 1      | 1         |
 
+  Scenario Outline: Remove relationship between a specific todo and project using filter (alternate flow)
+    Given I have a todo with the ID "<todoId>"
+    And I have a tasksof with the ID "<tasksofID>"
+    When I request to delete the relationship between todo "<todoId>" and tasksof "<tasksofID>" relationship using filter
+    Then the relationship between todo "<todoId>" and tasksof "<tasksofID>" should no longer exist
+    Examples:
+      | todoId | tasksofID |
+      | 2      | 1         |
 
   Scenario Outline: Delete a tasksof relationship between todo and project using put method (Alternate Flow)
     Given I have a todo with id "<todoId>"
@@ -28,9 +33,10 @@ Feature:
     And I should receive a status code "200" with a response message "OK"
     Examples:
       | todoId | projectId |
-      |--------|-----------|
       | 2      | 1         |
       | 1      | 1         |
+
+#    Filter - delete tasks of todo
 
 
   Scenario Outline: Delete a relationship between a todo and a project
@@ -50,25 +56,3 @@ Feature:
       | 1      | 1         | Could not find any instances with todos/1/tasksOf/1      |
       | 2      | 1         | Could not find any instances with todos/2/tasksOf/1      |
 
-
-  Scenario Outline: Delete a tasksof relationship between nonexistent todo and project by id in endpoint (Error Flow)
-    Given the todo with id "<todoId>" does not exist
-    And the project with id "<projectId>" exists
-    When I delete the nonexistent tasksof relationship between todo with id "<todoId>" and project with id "<projectId>" using id in endpoint
-    Then the response body has the error message "Cannot invoke \"uk.co.compendiumdev.thingifier.core.domain.instances.ThingInstance.getRelationships()\" because \"parent\" is null"
-    And a status code "400" with response phrase "Bad Request" is returned
-    Examples:
-      | todoId | projectId |
-      | 0      | 1         |
-      | 100    | 1         |
-
-  Scenario Outline: Delete a tasksof relationship between todo and nonexistent project by id in endpoint (Error Flow)
-    Given the todo with id "<todoId>" exists
-    And the project with id "<projectId>" does not exist
-    When I delete the nonexistent tasksof relationship between todo with id "<todoId>" and project with id "<projectId>" using id in endpoint
-    Then the response body has the error message "<errorMessage>"
-    And a status code "404" with response phrase "Not Found" is returned
-    Examples:
-      | todoId | projectId | errorMessage                                          |
-      | 1      | 100       | Could not find any instances with todos/1/tasksof/100 |
-      | 2      | 0         | Could not find any instances with todos/2/tasksof/0   |

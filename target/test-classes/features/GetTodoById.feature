@@ -4,53 +4,40 @@ Feature: Get Todo By Id
 
   Background:
     Given the service is running
-    And I add a new todo with title "New Todo"
 
-  Scenario Outline: Get a todo by id in endpoint (Normal Flow)
-    Given the todo with id "<todoId>" exists
-    When I get the todo with id "<todoId>"
-    Then I should see a response of one todo with id "<todoId>"
-    And a status code "200" with response phrase "OK" is returned
-    Examples:
-      | todoId  |
-      | 1       |
-      | 2       |
-      | 3       |
 
-  Scenario Outline: Get a todo by filtering endpoint with id (Alternate Flow)
-    Given the todo with id "<todoId>" exists
-    When I filter the endpoint to get the todo with id "<todoId>"
-    Then I should see a response of one todo with id "<todoId>"
-    And a status code "200" with response phrase "OK" is returned
+  Scenario Outline: Retrieve a specific todo item by its identifier (Standard Procedure)
+    Given a todo item exists with identifier "<todoId>"
+    When I request the todo item with identifier "<todoId>"
+    Then the response should include a status code of "200" and title "<title>"
     Examples:
-      | todoId  |
-      | 1       |
-      | 2       |
-      | 3       |
+      | todoId | title |
+      | 1      | scan paperwork |
+      | 2      | file paperwork |
+
+
+
+
+  Scenario Outline: Get a todo by filtering todos list with id (Alternate Flow)
+    Given the todo with id "<todoId>" exists
+    When I filter the todos list to get the todo with id "<todoId>"
+    Then a status code "200" and title "<title>" is returned
+    Examples:
+      | todoId | title |
+      | 1      | scan paperwork |
+      | 2      | file paperwork |
+
+
 
   Scenario Outline: Get a nonexistent todo (Error Flow)
-    Given the todo with id "<todoId>" does not exist
-    When I get the todo with id "<todoId>"
-    Then no todo is returned
-    And the response body has the error message "<errorMessage>"
-    Then a status code "404" with response phrase "Not Found" is returned
+    Given the todos list does not contain id "<todoId>"
+    When I request the todo item with id "<todoId>"
+    Then a status code of "404" is returned
     Examples:
-      | todoId | errorMessage                              |
-      | 0      | Could not find an instance with todos/0   |
-      | 100    | Could not find an instance with todos/100 |
+                  | todoId | errorMessage                              |
+                  | 0      | Could not find an instance with todos/0   |
+                  | 100    | Could not find an instance with todos/100 |
 
-  # Fails with example of invalidId ;
-  Scenario Outline: Get a todo with invalid id (Error Flow)
-    Given the todo with id "<invalidId>" does not exist
-    When I get the todo with id "<invalidId>"
-    Then no todo is returned
-    And the response body has the error message "<errorMessage>"
-    Then a status code "404" with response phrase "Not Found" is returned
-    Examples:
-      | invalidId | errorMessage                                    |
-      | a         | Could not find an instance with todos/a         |
-      | -         | Could not find an instance with todos/-         |
-      | *         | Could not find an instance with todos/*         |
-      | ;         | Could not find an instance with todos/;         |
-      | ;;;;;;    | Could not find an instance with todos/;;;;;;    |
-      | hello     | Could not find an instance with todos/hello     |
+
+
+

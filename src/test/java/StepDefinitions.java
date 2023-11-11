@@ -6,7 +6,15 @@ import org.example.Api;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,8 +30,14 @@ public class StepDefinitions {
     int currentProjectCount;
     int currentTodosCount;
     int previousTodosCount;
-
+    String temp;
+    String add_status_code;
     List<String> todoCategoriesIds;
+
+    String view_todos_status_code;
+    String view_todos_last_status;
+    Response response1;
+    String view_todos_string;
 
     @Given("the app is running")
     public void the_app_is_running(){
@@ -40,6 +54,7 @@ public class StepDefinitions {
         Api call = new Api();
         boolean categoryExists = false;
         Response getCategories = call.getRequest("categories", "json");
+
 
         try {
             JSONObject getCategoriesResponseBody = new JSONObject(getCategories.body().string());
@@ -60,30 +75,30 @@ public class StepDefinitions {
 
     }
 
-    @Given("the todo with id {string}> exists")
-    public void the_todo_with_id_exists(String todoId) {
-        Api call = new Api();
-        boolean todoExists = false;
-        Response getTodos = call.getRequest("todos", "json");
-
-        try {
-            JSONObject getTodosResponseBody = new JSONObject(getTodos.body().string());
-            JSONArray todosArray = getTodosResponseBody.getJSONArray("todos");
-            for (Object obj : todosArray) {
-                JSONObject todo = (JSONObject) obj;
-                String todoIdStr = todo.getString("id");
-                if (todoIdStr.equals(todoId)) {
-                    todoExists = true;
-                    break;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        assertTrue(todoExists, "ERROR: The todo does not exist in the system.");
-
-    }
+//    @Given("the todo with id {string}> exists")
+//    public void the_todo_with_id_exists(String todoId) {
+//        Api call = new Api();
+//        boolean todoExists = false;
+//        Response getTodos = call.getRequest("todos", "json");
+//
+//        try {
+//            JSONObject getTodosResponseBody = new JSONObject(getTodos.body().string());
+//            JSONArray todosArray = getTodosResponseBody.getJSONArray("todos");
+//            for (Object obj : todosArray) {
+//                JSONObject todo = (JSONObject) obj;
+//                String todoIdStr = todo.getString("id");
+//                if (todoIdStr.equals(todoId)) {
+//                    todoExists = true;
+//                    break;
+//                }
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        assertTrue(todoExists, "ERROR: The todo does not exist in the system.");
+//
+//    }
 
     @Given("the project with id {string}> exists")
     public void the_project_with_id_exists(String projectId) {
@@ -536,6 +551,350 @@ public class StepDefinitions {
         assertEquals(0, currentTodosCount- previousTodosCount);
     }
 
+    @Given("I have a todo with ID {string}")
+    public void i_have_a_todo_with_id(String todoId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        URL url = new URL("http://localhost:4567/todos/"+todoId);
+        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+        int status_code = connection_url.getResponseCode();
+        assertEquals(HttpURLConnection.HTTP_OK, status_code);
+    }
+
+    @Given("I have a project with ID {string}")
+    public void i_have_a_project_with_id(String string) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        URL url = new URL("http://localhost:4567/projects/"+string);
+        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+        int status_code = connection_url.getResponseCode();
+        assertEquals(HttpURLConnection.HTTP_OK, status_code);
+    }
+    @Given("I create a project with title {string}, completed {string}, description {string}, active {string}")
+    public void i_create_a_project_with_title_completed_description_active(String string, String string2, String string3, String string4) {
+        // Write code here that turns the phrase above into concrete actions
+
+        HttpClient posttodo = HttpClient.newHttpClient();
+
+        // XML data that we want to send
+        String xmlData = """
+            <project>
+                <active>""" + string4 + """
+                </active> 
+                <description> """ + string3 + """
+                </description>
+                <completed>""" + string2 + """
+                </completed>
+                <title>""" + string + """
+            </title>
+            </project>""";
+
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:4567/projects")) // Use the correct URL here
+                .header("Content-Type", "application/xml") // Set the header to accept XML
+                .POST(HttpRequest.BodyPublishers.ofString(xmlData)) // Use the XML data as the body of the POST request
+                .build();
+
+        try {
+            // Send the request and receive the response
+            HttpResponse<String> response = posttodo.send(req, HttpResponse.BodyHandlers.ofString());
+
+            // Get the status code from the response
+            int temp = response.statusCode();
+
+            // Convert the status code to String if needed
+            String add_status_code = Integer.toString(temp);
+
+            // Print out the status code
+            System.out.println("Status code: " + add_status_code);
+
+            // Optionally print the response body
+            System.out.println("Response body: " + response.body());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    @When("I request to add a relationship tasksof between todo {string} and projects {string}")
+    public void i_request_to_add_a_relationship_between_todo_and_tasksof(String string, String string2) throws IOException, InterruptedException {
+        // Write code here that turns the phrase above into concrete actions
+        HttpClient posttodo = HttpClient.newHttpClient();
+        HttpRequest req = HttpRequest.newBuilder().uri(URI.create("http://localhost:4567/todos/"+string+"/tasksof")).POST(HttpRequest.BodyPublishers.ofString("{\"id\":\""+string2+"\"}")).build();
+        HttpResponse<String> response = posttodo.send(req, HttpResponse.BodyHandlers.ofString());
+    }
+    @Then("the relationship between todo {string} and project should be created")
+    public void the_relationship_between_todo_and_tasksof_should_be_created(String string) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        URL url = new URL("http://localhost:4567/todos/"+string+"/tasksof");
+        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+        int status_code = connection_url.getResponseCode();
+        assertEquals(HttpURLConnection.HTTP_OK, status_code);
+
+
+
+    }
+
+    @Then("the relationship between todo {string} and project {string} should be created")
+    public void the_relationship_between_todo_and_tasksof_should_be_created1(String string, String string2) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+
+        try {
+            URL url = new URL("http://localhost:4567/todos/" +string + "/tasksof");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            int status_code = connection.getResponseCode();
+            if (status_code == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine;
+                StringBuffer content = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    content.append(inputLine);
+                }
+                in.close();
+
+                JSONObject jsonResponse = new JSONObject(content.toString());
+                // Assuming the JSON object has a key called "id" for the ID
+
+// Get the JSON array associated with the key "projects"
+                JSONArray projects = jsonResponse.getJSONArray("projects");
+                String[] id = new String[1];
+// Loop through each object in the JSON array
+                for (int i = 0; i < projects.length(); i++) {
+                    // Get the individual project as a JSONObject
+                    JSONObject project = projects.getJSONObject(i);
+
+                    // Check if the project has an "id" key
+                    if (project.has("id")) {
+                        // Get the value of the "id" field
+                        id[0] = project.getString("id");
+
+                        // Now you have the ID, you can do something with it
+//                        System.out.println("Project ID: " + id);
+                    }
+                }
+
+                // Now you have the ID as a string. To convert it into a JSON object:
+                temp= id[0];
+
+            } else {
+                // Handle error...
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(temp==string2){
+            assertEquals(200, HttpURLConnection.HTTP_OK);
+        }
+
+    }
+
+
+    @When("I request to add a relationship tasksof between todo {string} and a non existent project with id {string}")
+    public void i_request_to_add_a_relationship_tasksof_between_todo_and_a_non_existent_project_with_id(String string, String string2) throws IOException, InterruptedException {
+        // Write code here that turns the phrase above into concrete actions
+        HttpClient posttodo = HttpClient.newHttpClient();
+        HttpRequest req = HttpRequest.newBuilder().uri(URI.create("http://localhost:4567/todos/"+string+"/tasksof")).POST(HttpRequest.BodyPublishers.ofString("{\"id\":\""+string2+"\"}")).build();
+        HttpResponse<String> response = posttodo.send(req, HttpResponse.BodyHandlers.ofString());
+        int temp = response.statusCode();
+        add_status_code = Integer.toString(temp);
+    }
+    @Then("I get an error code {string}")
+    public void i_get_an_error_code(String string) {
+        // Write code here that turns the phrase above into concrete actions
+        assertEquals(add_status_code,string);
+    }
+
+
+    @Given("the service is running")
+    public void the_service_is_running() {
+        // Write code here that turns the phrase above into concrete actions
+        Api call = new Api();
+        // Verify that the server is running
+        response1 = call.checkService();
+        assertEquals(200, response1.code());
+    }
+    @Given("a todo item exists with identifier {string}")
+    public void a_todo_item_exists_with_identifier(String string) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        URL url = new URL("http://localhost:4567/todos/"+string);
+        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+        int view_todos_status_code = connection_url.getResponseCode();
+        assertEquals(HttpURLConnection.HTTP_OK, view_todos_status_code);
+    }
+    @When("I request the todo item with identifier {string}")
+    public void i_request_the_todo_item_with_identifier(String string) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+
+        try {
+            String id = "123"; // Replace with your actual ID
+            URL url = new URL("http://localhost:4567/todos/" + string);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            int responseCode = connection.getResponseCode();
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                // Convert response to JSON object
+                JSONObject jsonResponse = new JSONObject(response.toString());
+
+                JSONArray todosArray = jsonResponse.getJSONArray("todos");
+                String[] titleJson = new String[2];
+// Assuming you want the first item in the array
+                if (todosArray.length() > 0) {
+                    JSONObject firstTodo = todosArray.getJSONObject(0);
+
+                    // Check if the firstTodo has a "title" key
+                    if (firstTodo.has("title")) {
+                        // Extract the title
+                        String title = firstTodo.getString("title");
+                        titleJson[0] = title;
+                        // Output the title
+                        System.out.println("Title: " + title);
+                    } else {
+                        // Handle case where the "title" key doesn't exist
+                        System.out.println("Key 'title' does not exist in the JSON response.");
+                    }
+                } else {
+                    // Handle case where the 'todos' array is empty
+                    System.out.println("'todos' array is empty.");
+                }
+
+
+                view_todos_string = titleJson[0];
+                // Output the title in JSON format
+            } else {
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
+        URL url = new URL("http://localhost:4567/todos/"+string);
+        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+        int temp = connection_url.getResponseCode();
+        view_todos_status_code = Integer.toString(temp);
+    }
+
+    @Then("the response should include a status code of {string} and title {string}")
+    public void the_response_should_include_a_view_todos_status_code_of(String string, String string2) {
+        // Write code here that turns the phrase above into concrete actions
+        assertEquals(string, view_todos_status_code);
+        assertEquals(view_todos_string, string2);
+    }
+
+
+
+    @Given("the todo with id {string} exists")
+    public void the_todo_with_id_exists(String string) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        URL url = new URL("http://localhost:4567/todos/"+string);
+        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+        int view_todos_status_code = connection_url.getResponseCode();
+        assertEquals(HttpURLConnection.HTTP_OK, view_todos_status_code);
+    }
+    @When("I filter the todos list to get the todo with id {string}")
+    public void i_filter_the_todos_list_to_get_the_todo_with_id(String string) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        try {
+            String id = "123"; // Replace with your actual ID
+            URL url = new URL("http://localhost:4567/todos?id=" + string);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+
+            int responseCode = connection.getResponseCode();
+            view_todos_status_code = Integer.toString(responseCode);
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                // Convert response to JSON object
+                JSONObject jsonResponse = new JSONObject(response.toString());
+
+                JSONArray todosArray = jsonResponse.getJSONArray("todos");
+                String[] titleJson = new String[2];
+// Assuming you want the first item in the array
+                if (todosArray.length() > 0) {
+                    JSONObject firstTodo = todosArray.getJSONObject(0);
+
+                    // Check if the firstTodo has a "title" key
+                    if (firstTodo.has("title")) {
+                        // Extract the title
+                        String title = firstTodo.getString("title");
+                        titleJson[0] = title;
+                        // Output the title
+                        System.out.println("Title: " + title);
+                    } else {
+                        // Handle case where the "title" key doesn't exist
+                        System.out.println("Key 'title' does not exist in the JSON response.");
+                    }
+                } else {
+                    // Handle case where the 'todos' array is empty
+                    System.out.println("'todos' array is empty.");
+                }
+
+
+                view_todos_string = titleJson[0];
+                // Output the title in JSON format
+            } else {
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
+    @Then("a status code {string} and title {string} is returned")
+    public void a_view_todos_status_code_is_returned(String string, String string2) {
+        // Write code here that turns the phrase above into concrete actions
+        assertEquals(string, view_todos_status_code);
+        assertEquals(string2, view_todos_string);
+    }
+
+    @Given("the todos list does not contain id {string}")
+    public void the_todos_list_does_not_contain_id(String string) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        URL url = new URL("http://localhost:4567/todos/"+string);
+        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+
+    }
+    @When("I request the todo item with id {string}")
+    public void i_request_the_todo_item_with_id(String string) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        URL url = new URL("http://localhost:4567/todos/"+string);
+        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+        int temp = connection_url.getResponseCode();
+        view_todos_last_status = Integer.toString(temp);
+    }
+
+    @Then("a status code of {string} is returned")
+    public void a_view_todos_status_code_of_is_returned(String string) {
+        // Write code here that turns the phrase above into concrete actions
+        assertEquals(view_todos_last_status,string);
+    }
 
 
 }
