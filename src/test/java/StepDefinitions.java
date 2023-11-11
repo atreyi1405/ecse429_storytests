@@ -7,7 +7,16 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
+
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -22,6 +31,8 @@ public class StepDefinitions {
     int currentProjectCount;
     int currentTodosCount;
     int previousTodosCount;
+
+    int previousCategoryTodoCount;
 
     List<String> todoCategoriesIds;
 
@@ -183,6 +194,7 @@ public class StepDefinitions {
         assertFalse(categoryExists, "ERROR: The category exists in the system");
     }
 
+
     @When("a user adds a category with title {string}, and description {string}")
     public void a_user_adds_a_category_with_title_and_description(String categoryTitle, String categoryDescription){
         Api call= new Api();
@@ -255,6 +267,7 @@ public class StepDefinitions {
         try{
             getTodoResponseBody= new JSONObject(getPreviousTodos.body().string());
             previousTodosCount=getTodoResponseBody.getJSONArray("todos").length();
+            System.out.print(previousTodosCount);
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -271,6 +284,7 @@ public class StepDefinitions {
         try{
             getTodoResponseBody= new JSONObject(getCurrentTodos.body().string());
             currentTodosCount= getTodoResponseBody.getJSONArray("todos").length();
+            System.out.print(currentTodosCount);
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -437,6 +451,183 @@ public class StepDefinitions {
         }
     }
 
+
+    //Justin's part here
+
+    @When("a user adds a relationship between a category with id {int} and a todo with id {int}")
+    public void a_user_adds_a_relationship_between_a_category_with_id_and_a_todo_with_id(Integer category_id, Integer todo_id) {
+        Api call= new Api();
+        JSONObject getCategoryTodoResponseBody =null;
+//        Response getPreviousCategoryTodo=call.getRequest("categories?id=" + category_id + "/todos", "json");
+        Response getPreviousCategoryTodo=call.getRequest("todos", "json");
+
+        try {
+            getCategoryTodoResponseBody = new JSONObject(getPreviousCategoryTodo.body().string());
+            //System.out.print(getCategoryTodoResponseBody);
+            previousCategoryTodoCount= getCategoryTodoResponseBody.getJSONArray("todos").length();
+            //System.out.print(previousCategoryTodoCount);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("id", category_id);
+        //System.out.print(requestBody);
+
+        //response=call.postRequest("todos/" + todo_id + "/categories", "json", requestBody);
+        //System.out.print(response);
+
+
+
+
+
+        try{
+            responseBody= new JSONObject(response.body().string());
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        Response getCurrentProjects=call.getRequest("todos/" + todo_id + "/categories", "json");
+        ///System.out.print(getCurrentProjects);
+
+        JSONObject getTodoResponseBody = new JSONObject(getCurrentProjects.body());
+        //System.out.print(getTodoResponseBody);
+
+        try{
+            getCategoryTodoResponseBody=new JSONObject(getCurrentProjects.body().string());
+            currentProjectCount=getCategoryTodoResponseBody.getJSONArray("categories?id=" + category_id + "/todos").length();
+            //System.out.print(currentProjectCount);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+
+    @When("a user adds a relationship between project with id {int} and the category with id {int}")
+    public void a_user_adds_a_relationship_between_project_with_id_and_the_category_with_id(Integer project_id, Integer category_id) {
+
+        Api call= new Api();
+        JSONObject getCategoryTodoResponseBody =null;
+//        Response getPreviousCategoryTodo=call.getRequest("categories?id=" + category_id + "/todos", "json");
+        //Response getPreviousCategoryTodo=call.getRequest("todos", "json");
+
+//        try {
+//            getCategoryTodoResponseBody = new JSONObject(getPreviousCategoryTodo.body().string());
+//            //System.out.print(getCategoryTodoResponseBody);
+//            previousCategoryTodoCount= getCategoryTodoResponseBody.getJSONArray("todos").length();
+//            //System.out.print(previousCategoryTodoCount);
+//        }catch (IOException e){
+//            e.printStackTrace();
+//        }
+
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("id", category_id);
+        //System.out.print(requestBody);
+
+        response=call.postRequest("projects?id=" + project_id + "/categories", "json", requestBody);
+        //System.out.print(response);
+
+        try{
+            URL url = new URL("http://localhost:4567/project/"+project_id);
+            HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+            int status_code = connection_url.getResponseCode();
+            System.out.print(status_code);
+            assertEquals(HttpURLConnection.HTTP_OK, status_code);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+
+
+        try{
+            responseBody= new JSONObject(response.body().string());
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        Response getCurrentProjects=call.getRequest("projects?id=" + project_id + "/categories", "json");
+        System.out.print(getCurrentProjects);
+
+        JSONObject getTodoResponseBody = new JSONObject(getCurrentProjects.body());
+        //System.out.print(getTodoResponseBody);
+
+        try{
+            getCategoryTodoResponseBody=new JSONObject(getCurrentProjects.body().string());
+            currentProjectCount=getCategoryTodoResponseBody.getJSONArray("projects?id=" + project_id + "/categories").length();
+            //System.out.print(currentProjectCount);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    @When("a user adds a project with title {string}")
+//    public void a_user_adds_a_project_with_title(String projectTitle) {
+//        Api call= new Api();
+//        JSONObject getProjectResponseBody=null;
+//        Response getPreviousProjects=call.getRequest("projects", "json");
+//        try{
+//            getProjectResponseBody= new JSONObject(getPreviousProjects.body().string());
+//            previousProjectCount= getProjectResponseBody.getJSONArray("projects").length();
+//        }catch (IOException e){
+//            e.printStackTrace();
+//        }
+//        JSONObject requestBody = new JSONObject();
+//        requestBody.put("title", projectTitle);
+//
+//        response=call.postRequest("projects", "json", requestBody);
+//        try{
+//            responseBody= new JSONObject(response.body().string());
+//        }catch (IOException e){
+//            e.printStackTrace();
+//        }
+//        Response getCurrentProjects=call.getRequest("projects", "json");
+//        try{
+//            getProjectResponseBody=new JSONObject(getCurrentProjects.body().string());
+//            currentProjectCount=getProjectResponseBody.getJSONArray("projects").length();
+//        }catch (IOException e){
+//            e.printStackTrace();
+//        }
+//
+//    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Then("user should not see response of todo with id {string}")
     public void user_should_not_see_response_of_todo_with_id(String todoId){
         assertEquals(0, responseBody.getJSONArray("todos").length(), "ERROR: Only one todo should be returned");
@@ -535,6 +726,8 @@ public class StepDefinitions {
     public void the_todo_is_not_added(){
         assertEquals(0, currentTodosCount- previousTodosCount);
     }
+
+
 
 
 
