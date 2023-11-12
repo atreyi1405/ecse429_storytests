@@ -1,4 +1,5 @@
-Feature:   As a user, I want to delete a categories relationship between a category and project
+Feature:   As a user, I want to delete a relationship between project and categories
+
 
     Background:
         Given the app is running
@@ -6,13 +7,13 @@ Feature:   As a user, I want to delete a categories relationship between a categ
     #normal_flow
     Scenario: Remove relationship between a specific category and project
         Given I have a project with ID "<project_id>"
-        And I have a categories with ID "<categories_id>"
+        #And I have a category with ID "<category_id>"
         When I request to delete the relationship between projects "<project_id>" and categories "<categories_id>" relationship
         Then the relationship between projects "<project_id>" and categories "<categories_id>" should no longer exist
 
         Examples:
-            | project_id  | categories_id |
-            | 3           | 2             |
+            | project_id  | categories_id  |
+            | 3           | 1             |
 
 
     #alternative_flow

@@ -1,13 +1,13 @@
-Feature: As a user, I want to add a relationship categories with id of a project
+Feature: As a user, I want to add a relationship tasks with id of a project
 
   Background:
       Given the app is running
 
 
     #normal_flow
-    Scenario: Add a relationship between a specific project and already defined category
-        #Given I have a project with ID "<project_id>"
-        #And I have a category with ID "<category_id>"
+    Scenario: Add a relationship between a specific project and already defined todo
+        Given I have a project with ID "<project_id>"
+        #And I have a todo with ID "<todo_id>"
         When I request to add a relationship categories between project "<project_id>" and categories "<category_id>"
         Then the relationship between project "<project_id>" category "<category_id>" should be created
 
@@ -42,7 +42,7 @@ Feature: As a user, I want to add a relationship categories with id of a project
 
 
 
-    
+
 
 
 
