@@ -18,7 +18,7 @@ Feature: Amend a todo
       | read ch.3  | Harry Potter     | False       | True            |
 
     # Alternate Flow
-  Scenario Outline: Change an empty field of a todo - via POST API call
+  Scenario Outline: Change a field of a todo - via POST API call
     Given a todo with title "<todo_title>", description "<todo_description>" and doneStatus "<done_status>" exists
     When a user marks the todo with title "<todo_title>" as done by using the POST API call
     Then the todo with title "<todo_title>" should have a doneStatus of "<new_done_status>"

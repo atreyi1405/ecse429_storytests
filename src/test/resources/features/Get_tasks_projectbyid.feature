@@ -1,6 +1,6 @@
-Feature: Get category By Id
+Feature: Get Todo connected to a project
   As a user,
-  I want to get a todo by id,
+  I want to get todos related to a project,
   so that I can edit it, or assign it to projects and categories
 
   Background:

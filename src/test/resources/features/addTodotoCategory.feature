@@ -1,7 +1,7 @@
 Feature: Adding a Relationship between todo and category
-    As a user,
-    I want to add a relationship todos with id of a category,
-    so that I can link related todos.
+        As a user,
+        I want to add a relationship todos with id of a category,
+        so that I can link related todos.
 
     Background:
         Given the app is running
