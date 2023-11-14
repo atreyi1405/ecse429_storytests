@@ -34,6 +34,7 @@ public class StepDefinitions {
 
     }
 
+    // Given
 
     @Given("the category with id {string} exists")
     public void the_category_with_id_exists(String categoryId) {
@@ -59,7 +60,6 @@ public class StepDefinitions {
         assertTrue(categoryExists, "ERROR: The Category with id " + categoryId + " does not exist.");
 
     }
-
 
     @Given("the todo with id {string} exists")
     public void the_todo_with_id_exists(String todoId) {
@@ -110,7 +110,6 @@ public class StepDefinitions {
         assertTrue(projectExists, "ERROR: The project does not exist in the system.");
 
     }
-
 
     @Given("the todo with id {string} does not exist")
     public void the_todo_with_id_does_not_exist(String todoId) {
@@ -183,6 +182,8 @@ public class StepDefinitions {
         // Assert that the specified todos does not exist
         assertFalse(categoryExists, "ERROR: The category exists in the system");
     }
+
+    // When
 
     @When("a user adds a category with title {string}, and description {string}")
     public void a_user_adds_a_category_with_title_and_description(String categoryTitle, String categoryDescription) {
@@ -386,7 +387,6 @@ public class StepDefinitions {
         response = call.deleteRequest("todos/" + todoId);
     }
 
-
     @When("user filters the endpoint to delete todo with id {string}")
     public void user_filters_the_endpoint_to_delete_todo_with_id(String todoId) {
         Api call = new Api();
@@ -397,7 +397,6 @@ public class StepDefinitions {
             e.printStackTrace();
         }
     }
-
 
     @When("user filters the endpoint to delete project with id {string}")
     public void user_filters_the_endpoint_to_delete_project_with_id(String projectId) {
@@ -410,7 +409,6 @@ public class StepDefinitions {
         }
     }
 
-
     @When("user filters the endpoint to delete category with id {string}")
     public void user_filters_the_endpoint_to_delete_category_with_id(String categoryId) {
         Api call = new Api();
@@ -421,8 +419,6 @@ public class StepDefinitions {
             e.printStackTrace();
         }
     }
-
-
 
     @Then("a new category with title {string} is added")
     public void a_new_category_with_title_is_added(String categoryTitle) {
@@ -480,7 +476,6 @@ public class StepDefinitions {
     public void the_category_is_not_added() {
         assertEquals(0,currentCategoriesCount-previousCategoriesCount);
     }
-
 
     @Then("a status code {string} with response phrase {string} is returned")
     public void a_status_code_with_response_phrase_is_returned(String statusCode, String responsePhrase) {

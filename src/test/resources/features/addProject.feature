@@ -1,5 +1,7 @@
-Feature: Adding Project
-  As a user, I want to add categories so that I can group similar categories.
+Feature: Adding a project
+  As a user,
+  I want to add a project,
+  to keep track of big milestones in my work.
 
   Background:
     Given the app is running
@@ -13,7 +15,7 @@ Feature: Adding Project
     |projectTitle  |  projectDescription  |
     |Office        |                      |
 
-    #Alternative Flow
+    #Alternative Flows
   Scenario Outline: Create a new project with title
     When a user adds a project with title "<projectTitle>"
     Then a new project with title "<projectTitle>" is added

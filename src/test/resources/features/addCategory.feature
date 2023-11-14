@@ -1,5 +1,7 @@
-Feature: Adding Category
-  As a user, I want to add categories so that I can group similar todos.
+Feature: Adding a category
+  As a user,
+  I want to add a category,
+  to group similar or related todos and projects.
 
   Background:
     Given the app is running

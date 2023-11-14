@@ -1,5 +1,7 @@
-Feature: Delete Project By Id
-  As a user,I want to delete a project by id so I can delete all similar items at once
+Feature: Delete a project
+  As a user,
+  I want to delete a project,
+  to keep an updated record of relevant projects.
 
   Background:
     Given the app is running

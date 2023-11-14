@@ -1,5 +1,7 @@
-Feature: Delete Category By Id
-  As a user,I want to delete a category by id so I can delete all similar items at once
+Feature: Delete a category
+  As a user,
+  I want to delete a category,
+  to clean up unused/deprecated categories.
 
   Background:
     Given the app is running
