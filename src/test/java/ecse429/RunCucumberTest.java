@@ -33,6 +33,4 @@ public class RunCucumberTest {
         System.out.println("Shutdown system");
         call.getRequest("shutdown", "json");
     }
-
-
 }
