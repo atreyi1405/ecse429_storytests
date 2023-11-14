@@ -5,14 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="155c9be8-7881-4cb7-9eb8-cdd10145c891" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/features/GetCategoryByID.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/features/GetCategoryByID.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/features/Get_Todo_Categories.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/features/Get_tasks_projectbyid.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/ecse429/StepDefinitions.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ecse429/StepDefinitions.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/features/GetCategoryByID.feature" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/features/GetCategoryByID.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/features/GetTodoById.feature" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/features/GetTodoById.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/features/ViewTodoCategories.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/features/GetTodoById.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/features/GetTodoById.feature" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -180,7 +173,7 @@
       <workItem from="1699816131276" duration="1698000" />
       <workItem from="1699817889076" duration="3963000" />
       <workItem from="1699853203556" duration="104000" />
-      <workItem from="1699853851404" duration="14798000" />
+      <workItem from="1699853851404" duration="15182000" />
     </task>
     <servers />
   </component>
@@ -253,23 +246,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java</url>
-          <line>1469</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java</url>
           <line>1470</line>
           <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java</url>
-          <line>1475</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java</url>
-          <line>1476</line>
-          <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java</url>
@@ -278,8 +256,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java</url>
-          <line>1477</line>
-          <option name="timeStamp" value="19" />
+          <line>1493</line>
+          <option name="timeStamp" value="20" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

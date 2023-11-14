@@ -32,9 +32,9 @@ Feature: Get Todo By Id
     When I request the todo item with id "<todoId>"
     Then a status code of "404" is returned
     Examples:
-                  | todoId | errorMessage                              |
-                  | 0      | Could not find an instance with todos/0   |
-                  | 100    | Could not find an instance with todos/100 |
+      | todoId |
+      | 0      |
+      | 100    |
 
 
 
