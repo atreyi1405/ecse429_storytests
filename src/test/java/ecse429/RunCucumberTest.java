@@ -21,7 +21,7 @@ public class RunCucumberTest {
         try {
             // Lauch the rest api todos list manager with the command
             runtime.exec("java -jar runTodoManagerRestAPI-1.5.5.jar");
-            System.out.println("Setting up environment");
+            //System.out.println("Setting up environment");
             Thread.sleep(1000);
         } catch (Exception e) {
             e.printStackTrace();
@@ -30,7 +30,7 @@ public class RunCucumberTest {
     @After
     public static void shutdownEnvironment() {
         Api call = new Api();
-        System.out.println("Shutdown system");
+        //System.out.println("Shutdown system");
         call.getRequest("shutdown", "json");
     }
 }

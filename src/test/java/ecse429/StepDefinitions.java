@@ -628,14 +628,14 @@ public class StepDefinitions {
                         String title = firstTodo.getString("title");
                         titleJson[0] = title;
                         // Output the title
-                        System.out.println("Title: " + title);
+                        //System.out.println("Title: " + title);
                     } else {
                         // Handle case where the "title" key doesn't exist
-                        System.out.println("Key 'title' does not exist in the JSON response.");
+                        //System.out.println("Key 'title' does not exist in the JSON response.");
                     }
                 } else {
                     // Handle case where the 'todos' array is empty
-                    System.out.println("'todos' array is empty.");
+                    //System.out.println("'todos' array is empty.");
                 }
 
 
@@ -712,14 +712,14 @@ public class StepDefinitions {
                         String title = firstTodo.getString("title");
                         titleJson[0] = title;
                         // Output the title
-                        System.out.println("Title: " + title);
+                        //System.out.println("Title: " + title);
                     } else {
                         // Handle case where the "title" key doesn't exist
-                        System.out.println("Key 'title' does not exist in the JSON response.");
+                        //System.out.println("Key 'title' does not exist in the JSON response.");
                     }
                 } else {
                     // Handle case where the 'todos' array is empty
-                    System.out.println("'todos' array is empty.");
+                    //System.out.println("'todos' array is empty.");
                 }
 
 
@@ -818,10 +818,10 @@ public class StepDefinitions {
             String add_status_code = Integer.toString(temp);
 
             // Print out the status code
-            System.out.println("Status code: " + add_status_code);
+            //System.out.println("Status code: " + add_status_code);
 
             // Optionally print the response body
-            System.out.println("Response body: " + response.body());
+            //System.out.println("Response body: " + response.body());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1028,10 +1028,10 @@ public class StepDefinitions {
             String add_status_code = Integer.toString(temp);
 
             // Print out the status code
-            System.out.println("Status code: " + add_status_code);
+            //System.out.println("Status code: " + add_status_code);
 
             // Optionally print the response body
-            System.out.println("Response body: " + response.body());
+            //System.out.println("Response body: " + response.body());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1106,7 +1106,7 @@ public class StepDefinitions {
                 temp= id[0];
 
             } else {
-                System.out.print("failed");
+                //System.out.print("failed");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1186,7 +1186,7 @@ public class StepDefinitions {
                 temp= id[0];
 
             } else {
-                System.out.print("failed");
+                //System.out.print("failed");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1264,7 +1264,7 @@ public class StepDefinitions {
                 temp= id[0];
 
             } else {
-                System.out.print("failed");
+                //System.out.print("failed");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1306,10 +1306,10 @@ public class StepDefinitions {
             String add_status_code = Integer.toString(temp);
 
             // Print out the status code
-            System.out.println("Status code: " + add_status_code);
+            //System.out.println("Status code: " + add_status_code);
 
             // Optionally print the response body
-            System.out.println("Response body: " + response.body());
+            //System.out.println("Response body: " + response.body());
         } catch (Exception e) {
             e.printStackTrace();
         }

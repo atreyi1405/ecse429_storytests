@@ -1,4 +1,4 @@
-Feature:
+Feature: Delete the relationship tasksof between a todo and a project
   As a user,
   I want to delete a tasksof relationship between a todo and project,
   so that I can manage my projects task list.

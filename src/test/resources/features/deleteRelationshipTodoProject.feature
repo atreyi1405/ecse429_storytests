@@ -1,13 +1,13 @@
-Feature: Delete the relationship between a todo and a project
+Feature: Delete the relationship tasks between a project and a todo
   As a user,
-  I want to remove the relationship between a todo and a project,
+  I want to remove the tasks relationship between a project and a todo,
   so that I can reorganize my todos.
 
   Background:
     Given the app is running
 
     # Normal Flow
-  Scenario Outline: Delete a tasks relationship with todo id and project id - via todo API
+  Scenario Outline: Delete a tasks relationship with project id and todo id - via todo API
     Given a project with title "<project_title>", description "<project_description>", completed status "<completed_status>", and active_status "<active_status>" exists
     And a todo with title "<todo_title>", description "<todo_description>" and doneStatus "<done_status>" exists
     And there is a tasks relationship between the todo with title "<todo_title>" and the project with title "<project_title>"
@@ -20,7 +20,7 @@ Feature: Delete the relationship between a todo and a project
       | ecse415       | Fall 2023           | False            | True          | read ch.3  | Harry Potter     | False       |
 
     # Alternate Flow
-  Scenario Outline: Delete a tasks relationship with todo id and project id - via project API
+  Scenario Outline: Delete a tasks relationship with project id and todo id - via project API
     Given a project with title "<project_title>", description "<project_description>", completed status "<completed_status>", and active_status "<active_status>" exists
     And a todo with title "<todo_title>", description "<todo_description>" and doneStatus "<done_status>" exists
     And there is a tasks relationship between the todo with title "<todo_title>" and the project with title "<project_title>"
@@ -33,7 +33,7 @@ Feature: Delete the relationship between a todo and a project
       | ecse415       | Fall 2023           | False            | True          | read ch.3  | Harry Potter     | False       |
 
     # Error Flow
-  Scenario Outline: Get a project by ID that does not exist
+  Scenario Outline: Delete an inexistant relationship a project by ID that does not exist
     Given a project with title "<project_title>", description "<project_description>", completed status "<completed_status>", and active_status "<active_status>" exists
     And a todo with title "<todo_title>", description "<todo_description>" and doneStatus "<done_status>" exists
     When a user deletes the tasks relationship between the todo with title "<todo_title>" and the project with title "<project_title>" with the project API
