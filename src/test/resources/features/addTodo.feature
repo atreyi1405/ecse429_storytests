@@ -1,4 +1,5 @@
 Feature: Adding todo
+As a user, I want to add todos so that I can create a todolist.
     Background:
         Given the app is running
 
