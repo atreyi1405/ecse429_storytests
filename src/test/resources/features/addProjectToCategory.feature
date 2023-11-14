@@ -1,5 +1,9 @@
-Feature: As a user, I want to add a relationship projects with id of a category
-    Background:
+Feature:  Adding Project To Category
+  As a user,
+  I want to add a relationship projects with id of a category,
+  so that I can organizing and link related projects.
+
+  Background:
       Given the app is running
 
       #normal_flow

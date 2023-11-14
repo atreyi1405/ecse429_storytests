@@ -1,7 +1,7 @@
 Feature:
   As a user,
-  I want to delete a tasksof relationship between a todo and project
-  So that I can manage my projects task list.
+  I want to delete a tasksof relationship between a todo and project,
+  so that I can manage my projects task list.
 
   Background:
     Given the service is running

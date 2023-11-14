@@ -1,7 +1,7 @@
 Feature: Get project by ID
   As a user,
   I want to view my projects,
-  to assess the work I have to do.
+  so that I can assess the work I have to do.
 
   Background:
     Given the app is running

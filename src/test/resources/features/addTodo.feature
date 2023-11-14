@@ -1,4 +1,8 @@
 Feature: Adding todo
+    As a user,
+    I want to add a todo,
+    so that I can keep track of the work to do.
+
     Background:
         Given the app is running
 

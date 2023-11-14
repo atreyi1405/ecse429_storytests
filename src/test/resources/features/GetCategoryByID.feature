@@ -1,6 +1,7 @@
 Feature: Get Categories By Id
   As a user,
-  I want to get a category by id to view.
+  I want to get a category by id to view,
+  so that I can assign todos and projects to categories.
 
   Background:
     Given the app is running

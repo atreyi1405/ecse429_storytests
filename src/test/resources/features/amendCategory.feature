@@ -1,7 +1,7 @@
 Feature: Amend a category
   As a user,
   I want to modify information related to a category,
-  to maintain consistency and coherence in my organization of todos and projects.
+  so that I can maintain consistency and coherence in my organization of todos and projects.
 
   Background:
     Given the app is running

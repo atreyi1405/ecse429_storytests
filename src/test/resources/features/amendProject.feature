@@ -1,7 +1,7 @@
 Feature: Amend a project
   As a user,
   I want to modify the details of a project,
-  to keep maintain keep my organization of work up to date.
+  so that I can keep maintain keep my organization of work up to date.
 
   Background:
     Given the app is running

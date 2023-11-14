@@ -1,5 +1,7 @@
 Feature: Adding Project
-  As a user, I want to add categories so that I can group similar categories.
+  As a user,
+  I want to add categories,
+  so that I can group similar elements.
 
   Background:
     Given the app is running

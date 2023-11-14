@@ -1496,11 +1496,6 @@ public class StepDefinitions {
 
     }
 
-    private void reset(){
-        for(Element e: Element.values()){
-            resetElement(e);
-        }
-    }
     private String getPluralElement(Element element){
         String pluralElement = "";
         switch (element) {
@@ -1526,30 +1521,7 @@ public class StepDefinitions {
         }
         return obj.getJSONArray(group);
     }
-    private void resetElement(Element element){
-        Api call = new Api();
-        String group = getPluralElement(element);
-        Response r = call.getRequest(group, "json");
-        JSONArray allElementsJSONArray = getJSONArray(r, group);
 
-        for (Object obj : allElementsJSONArray) {
-            JSONObject objJSON = (JSONObject) obj;
-            String id = objJSON.getString("id");
-            switch (element){
-                case CATEGORY:
-                case TODO:
-                    if (!id.equals("1") && !id.equals("2")) {
-                        r = call.deleteRequest(group + "/" + id);
-                    }
-                    break;
-                case PROJECT:
-                    if (!id.equals("1")) {
-                        r = call.deleteRequest(group + "/" + id);
-                    }
-                    break;
-            }
-        }
-    }
     private boolean elementExistsByTitle(Element element, String targetTitle){
         Api call = new Api();
         String group = getPluralElement(element);
@@ -1693,7 +1665,6 @@ public class StepDefinitions {
     @Then("the project with title {string} should have a completed status of {string}")
     public void theProjectWithTitleShouldHaveACompletedStatusOf(String title, String completed) {
         assertTrue(isMatch(Element.PROJECT, title, "completed", completed));
-        //reset();
     }
 
     @When("a user marks the project {string} as complete by using the POST API call")
@@ -1748,7 +1719,6 @@ public class StepDefinitions {
         // TODO: Get the todo by id
         // TODO: Check that the todo has the right doneStatus
         assertTrue(isMatch(Element.TODO, title, "doneStatus", doneStatus));
-        //reset();
     }
 
     @When("a user marks the todo with title {string} as done by using the POST API call")
@@ -1788,7 +1758,6 @@ public class StepDefinitions {
         JSONArray array = getJSONArray(response, "projects");
         array.getJSONObject(0).getString("title");
         assertTrue(title.equals(array.getJSONObject(0).getString("title")));
-        //reset();
     }
 
     @Given("there are a number of projects {string} in the system")
@@ -1818,7 +1787,6 @@ public class StepDefinitions {
     public void projectsAreReturned(String x) {
         JSONArray array = getJSONArray(response, "projects");
         assertEquals(Integer.parseInt(x), array.length());
-        //reset();
     }
 
     @When("a user gets the project with id {string}")
@@ -1856,7 +1824,6 @@ public class StepDefinitions {
         Response r = call.getRequest("todos/" + todoId + "/tasksof", "json");
         JSONArray array = getJSONArray(r, "projects");
         assertEquals(0, array.length());
-        //reset();
     }
 
     @When("a user deletes the tasks relationship between the todo with title {string} and the project with title {string} with the project API")

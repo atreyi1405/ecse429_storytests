@@ -1,4 +1,7 @@
-Feature: As a user, I want to add a relationship tasks with id of a project
+Feature: Adding Category to Project
+  As a user,
+  I want to add a relationship tasks with id of a project,
+  so that I can group related projects.
 
   Background:
       Given the app is running

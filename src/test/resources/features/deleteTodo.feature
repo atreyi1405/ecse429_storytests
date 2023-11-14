@@ -1,5 +1,7 @@
 Feature: Delete Todo By Id
-  As a user,I want to delete a todo by id so I can delete the completed todo item.
+  As a user,
+  I want to delete a todo by id,
+  so that I can delete the completed todo item.
 
   Background:
     Given the app is running

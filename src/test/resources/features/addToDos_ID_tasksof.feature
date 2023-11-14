@@ -1,10 +1,10 @@
-Feature:
+Feature: Adding a tasksof Relationship
   As a user,
-  I want to add a relationship tasksof between id of a todo and project
+  I want to add a relationship tasksof between id of a todo and project,
+  so that I can link tasks with bigger milestones.
 
   Background:
     Given the service is running
-
 
   Scenario Outline: Add a relationship tasksof between a specific todo and already defined project
     Given I have a todo with ID "<todoID>"

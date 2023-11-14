@@ -1,7 +1,7 @@
 Feature: Delete the relationship between a todo and a project
   As a user,
   I want to remove the relationship between a todo and a project,
-  to reorganize my todos.
+  so that I can reorganize my todos.
 
   Background:
     Given the app is running

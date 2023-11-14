@@ -1,4 +1,8 @@
-Feature: As a user, I want to add a relationship categories with id of a todo
+Feature: Adding Category to Todo
+  As a user,
+  I want to add a relationship categories with id of a todo,
+  so that I can group related todos.
+
   Background:
     Given the app is running
 

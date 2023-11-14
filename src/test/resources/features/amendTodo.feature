@@ -1,7 +1,7 @@
 Feature: Amend a todo
   As a user,
   I want to modify information related to a todo,
-  to maintain an up to date record of work.
+  so that I can maintain an up to date record of work.
 
   Background:
     Given the app is running

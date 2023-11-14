@@ -1,6 +1,7 @@
 Feature: Get category By Id
   As a user,
-  I want to get a todo by id, so I can edit it, or assign it to projects and categories
+  I want to get a todo by id,
+  so that I can edit it, or assign it to projects and categories
 
   Background:
     Given the app is running
