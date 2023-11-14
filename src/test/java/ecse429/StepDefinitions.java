@@ -9,11 +9,19 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class StepDefinitions {
     Response response;
@@ -25,8 +33,16 @@ public class StepDefinitions {
     int currentTodosCount;
     int previousTodosCount;
 
-    List<String> todoCategoriesIds;
+    String status_code;
+    String last_status;
 
+    String view_todos_status_code;
+    String view_todos_last_status;
+
+    String view_todos_string;
+    List<String> todoCategoriesIds;
+    String temp;
+    String add_status_code;
     @Given("the app is running")
     public void the_app_is_running() {
         Api call = new Api();
@@ -490,6 +506,945 @@ public class StepDefinitions {
                 "ERROR: The response phrase is: " + response.message() +
                         "\n instead of : " + responsePhrase);
         assertEquals(responsePhrase, response.message(), "ERROR: The actual response phrase does not match the expected response phrase.");
+    }
+
+    @Given("a category item exists with identifier {string}")
+    public void a_category_item_exists_with_identifier(String string) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        URL url = new URL("http://localhost:4567/categories/"+string);
+        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+        int status_code = connection_url.getResponseCode();
+        assertEquals(HttpURLConnection.HTTP_OK, status_code);
+    }
+    @When("I request the category item with identifier {string}")
+    public void i_request_the_category_item_with_identifier(String string) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        URL url = new URL("http://localhost:4567/categories/"+string);
+        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+        int temp = connection_url.getResponseCode();
+        status_code = Integer.toString(temp);
+    }
+    @Then("the output should include a status code of {string}")
+    public void the_output_should_include_a_status_code_of(String string) {
+        // Write code here that turns the phrase above into concrete actions
+        assertEquals(string, status_code);
+    }
+
+//    @Given("the category with id {string} exists")
+//    public void the_category_with_id_exists1(String string) throws IOException {
+//        // Write code here that turns the phrase above into concrete actions
+//        URL url = new URL("http://localhost:4567/categories/"+string);
+//        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+//        int status_code = connection_url.getResponseCode();
+//        assertEquals(HttpURLConnection.HTTP_OK, status_code);
+//    }
+    @When("I filter the category list to get the todo with id {string}")
+    public void i_filter_the_category_list_to_get_the_todo_with_id(String string) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        URL url = new URL("http://localhost:4567/categories?id="+string);
+        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+        int temp = connection_url.getResponseCode();
+        status_code = Integer.toString(temp);
+    }
+    @Then("a output code {string} is returned")
+    public void a_output_code_is_returned(String string) {
+        // Write code here that turns the phrase above into concrete actions
+        assertEquals(string, status_code);
+    }
+
+    @Given("the category list does not contain id {string}")
+    public void the_category_list_does_not_contain_id(String string) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        URL url = new URL("http://localhost:4567/categories/"+string);
+        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+
+    }
+    @When("I request the category item with id {string}")
+    public void i_request_the_category_item_with_id(String string) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        URL url = new URL("http://localhost:4567/categories/"+string);
+        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+        int temp = connection_url.getResponseCode();
+        last_status = Integer.toString(temp);
+    }
+    @Then("a output code of {string} is returned")
+    public void a_output_code_of_is_returned(String string) {
+        // Write code here that turns the phrase above into concrete actions
+        assertEquals(last_status,string);
+    }
+
+
+    @Given("the service is running")
+    public void the_service_is_running() {
+        // Write code here that turns the phrase above into concrete actions
+        Api call = new Api();
+        // Verify that the server is running
+        response = call.checkService();
+        assertEquals(200, response.code());
+    }
+    @Given("a todo item exists with identifier {string}")
+    public void a_todo_item_exists_with_identifier(String string) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        URL url = new URL("http://localhost:4567/todos/"+string);
+        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+        int view_todos_status_code = connection_url.getResponseCode();
+        assertEquals(HttpURLConnection.HTTP_OK, view_todos_status_code);
+    }
+    @When("I request the todo item with identifier {string}")
+    public void i_request_the_todo_item_with_identifier(String string) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+
+        try {
+            String id = "123"; // Replace with your actual ID
+            URL url = new URL("http://localhost:4567/todos/" + string);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            int responseCode = connection.getResponseCode();
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                // Convert response to JSON object
+                JSONObject jsonResponse = new JSONObject(response.toString());
+
+                JSONArray todosArray = jsonResponse.getJSONArray("todos");
+                String[] titleJson = new String[2];
+// Assuming you want the first item in the array
+                if (todosArray.length() > 0) {
+                    JSONObject firstTodo = todosArray.getJSONObject(0);
+
+                    // Check if the firstTodo has a "title" key
+                    if (firstTodo.has("title")) {
+                        // Extract the title
+                        String title = firstTodo.getString("title");
+                        titleJson[0] = title;
+                        // Output the title
+                        System.out.println("Title: " + title);
+                    } else {
+                        // Handle case where the "title" key doesn't exist
+                        System.out.println("Key 'title' does not exist in the JSON response.");
+                    }
+                } else {
+                    // Handle case where the 'todos' array is empty
+                    System.out.println("'todos' array is empty.");
+                }
+
+
+                view_todos_string = titleJson[0];
+                // Output the title in JSON format
+            } else {
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
+        URL url = new URL("http://localhost:4567/todos/"+string);
+        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+        int temp = connection_url.getResponseCode();
+        view_todos_status_code = Integer.toString(temp);
+    }
+
+    @Then("the response should include a status code of {string} and title {string}")
+    public void the_response_should_include_a_view_todos_status_code_of(String string, String string2) {
+        // Write code here that turns the phrase above into concrete actions
+        assertEquals(string, view_todos_status_code);
+        assertEquals(view_todos_string, string2);
+    }
+
+
+
+//    @Given("the todo with id {string} exists")
+//    public void the_todo_with_id_exists(String string) throws IOException {
+//        // Write code here that turns the phrase above into concrete actions
+//        URL url = new URL("http://localhost:4567/todos/"+string);
+//        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+//        int view_todos_status_code = connection_url.getResponseCode();
+//        assertEquals(HttpURLConnection.HTTP_OK, view_todos_status_code);
+//    }
+    @When("I filter the todos list to get the todo with id {string}")
+    public void i_filter_the_todos_list_to_get_the_todo_with_id(String string) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        try {
+            String id = "123"; // Replace with your actual ID
+            URL url = new URL("http://localhost:4567/todos?id=" + string);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+
+            int responseCode = connection.getResponseCode();
+            view_todos_status_code = Integer.toString(responseCode);
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                // Convert response to JSON object
+                JSONObject jsonResponse = new JSONObject(response.toString());
+
+                JSONArray todosArray = jsonResponse.getJSONArray("todos");
+                String[] titleJson = new String[2];
+// Assuming you want the first item in the array
+                if (todosArray.length() > 0) {
+                    JSONObject firstTodo = todosArray.getJSONObject(0);
+
+                    // Check if the firstTodo has a "title" key
+                    if (firstTodo.has("title")) {
+                        // Extract the title
+                        String title = firstTodo.getString("title");
+                        titleJson[0] = title;
+                        // Output the title
+                        System.out.println("Title: " + title);
+                    } else {
+                        // Handle case where the "title" key doesn't exist
+                        System.out.println("Key 'title' does not exist in the JSON response.");
+                    }
+                } else {
+                    // Handle case where the 'todos' array is empty
+                    System.out.println("'todos' array is empty.");
+                }
+
+
+                view_todos_string = titleJson[0];
+                // Output the title in JSON format
+            } else {
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
+    @Then("a status code {string} and title {string} is returned")
+    public void a_view_todos_status_code_is_returned(String string, String string2) {
+        // Write code here that turns the phrase above into concrete actions
+        assertEquals(string, view_todos_status_code);
+        assertEquals(string2, view_todos_string);
+    }
+
+    @Given("the todos list does not contain id {string}")
+    public void the_todos_list_does_not_contain_id(String string) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        URL url = new URL("http://localhost:4567/todos/"+string);
+        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+
+    }
+    @When("I request the todo item with id {string}")
+    public void i_request_the_todo_item_with_id(String string) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        URL url = new URL("http://localhost:4567/todos/"+string);
+        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+        int temp = connection_url.getResponseCode();
+        view_todos_last_status = Integer.toString(temp);
+    }
+
+    @Then("a status code of {string} is returned")
+    public void a_view_todos_status_code_of_is_returned(String string) {
+        // Write code here that turns the phrase above into concrete actions
+        assertEquals(view_todos_last_status,string);
+    }
+
+
+    @Given("I have a todo with ID {string}")
+    public void i_have_a_todo_with_id(String todoId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        URL url = new URL("http://localhost:4567/todos/"+todoId);
+        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+        int status_code = connection_url.getResponseCode();
+        assertEquals(HttpURLConnection.HTTP_OK, status_code);
+    }
+
+    @Given("I have a project with ID {string}")
+    public void i_have_a_project_with_id(String string) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        URL url = new URL("http://localhost:4567/projects/"+string);
+        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+        int status_code = connection_url.getResponseCode();
+        assertEquals(HttpURLConnection.HTTP_OK, status_code);
+    }
+    @Given("I create a project with title {string}, completed {string}, description {string}, active {string}")
+    public void i_create_a_project_with_title_completed_description_active(String string, String string2, String string3, String string4) {
+        // Write code here that turns the phrase above into concrete actions
+
+        HttpClient posttodo = HttpClient.newHttpClient();
+
+        // XML data that we want to send
+        String xmlData = """
+            <project>
+                <active>""" + string4 + """
+                </active>
+                <description> """ + string3 + """
+                </description>
+                <completed>""" + string2 + """
+                </completed>
+                <title>""" + string + """
+            </title>
+            </project>""";
+
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:4567/projects")) // Use the correct URL here
+                .header("Content-Type", "application/xml") // Set the header to accept XML
+                .POST(HttpRequest.BodyPublishers.ofString(xmlData)) // Use the XML data as the body of the POST request
+                .build();
+
+        try {
+            // Send the request and receive the response
+            HttpResponse<String> response = posttodo.send(req, HttpResponse.BodyHandlers.ofString());
+
+            // Get the status code from the response
+            int temp = response.statusCode();
+
+            // Convert the status code to String if needed
+            String add_status_code = Integer.toString(temp);
+
+            // Print out the status code
+            System.out.println("Status code: " + add_status_code);
+
+            // Optionally print the response body
+            System.out.println("Response body: " + response.body());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    @When("I request to add a relationship tasksof between todo {string} and projects {string}")
+    public void i_request_to_add_a_relationship_between_todo_and_tasksof(String string, String string2) throws IOException, InterruptedException {
+        // Write code here that turns the phrase above into concrete actions
+        HttpClient posttodo = HttpClient.newHttpClient();
+        HttpRequest req = HttpRequest.newBuilder().uri(URI.create("http://localhost:4567/todos/"+string+"/tasksof")).POST(HttpRequest.BodyPublishers.ofString("{\"id\":\""+string2+"\"}")).build();
+        HttpResponse<String> response = posttodo.send(req, HttpResponse.BodyHandlers.ofString());
+    }
+    @Then("the relationship between todo {string} and project should be created")
+    public void the_relationship_between_todo_and_tasksof_should_be_created(String string) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        URL url = new URL("http://localhost:4567/todos/"+string+"/tasksof");
+        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+        int status_code = connection_url.getResponseCode();
+        assertEquals(HttpURLConnection.HTTP_OK, status_code);
+
+
+
+    }
+
+    @Then("the relationship between todo {string} and project {string} should be created")
+    public void the_relationship_between_todo_and_tasksof_should_be_created1(String string, String string2) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+
+        try {
+            URL url = new URL("http://localhost:4567/todos/" +string + "/tasksof");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            int status_code = connection.getResponseCode();
+            if (status_code == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine;
+                StringBuffer content = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    content.append(inputLine);
+                }
+                in.close();
+
+                JSONObject jsonResponse = new JSONObject(content.toString());
+                // Assuming the JSON object has a key called "id" for the ID
+
+// Get the JSON array associated with the key "projects"
+                JSONArray projects = jsonResponse.getJSONArray("projects");
+                String[] id = new String[1];
+// Loop through each object in the JSON array
+                for (int i = 0; i < projects.length(); i++) {
+                    // Get the individual project as a JSONObject
+                    JSONObject project = projects.getJSONObject(i);
+
+                    // Check if the project has an "id" key
+                    if (project.has("id")) {
+                        // Get the value of the "id" field
+                        id[0] = project.getString("id");
+
+                        // Now you have the ID, you can do something with it
+//                        System.out.println("Project ID: " + id);
+                    }
+                }
+
+                // Now you have the ID as a string. To convert it into a JSON object:
+                temp= id[0];
+
+            } else {
+                // Handle error...
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(temp==string2){
+            assertEquals(200, HttpURLConnection.HTTP_OK);
+        }
+
+    }
+
+
+    @When("I request to add a relationship tasksof between todo {string} and a non existent project with id {string}")
+    public void i_request_to_add_a_relationship_tasksof_between_todo_and_a_non_existent_project_with_id(String string, String string2) throws IOException, InterruptedException {
+        // Write code here that turns the phrase above into concrete actions
+        HttpClient posttodo = HttpClient.newHttpClient();
+        HttpRequest req = HttpRequest.newBuilder().uri(URI.create("http://localhost:4567/todos/"+string+"/tasksof")).POST(HttpRequest.BodyPublishers.ofString("{\"id\":\""+string2+"\"}")).build();
+        HttpResponse<String> response = posttodo.send(req, HttpResponse.BodyHandlers.ofString());
+        int temp = response.statusCode();
+        add_status_code = Integer.toString(temp);
+    }
+
+    @Given("I have a category with ID {string}")
+    public void i_have_a_category_with_id(String string) {
+        try {
+            URL url = new URL("http://localhost:4567/categories/" + string);
+            HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+            int status_code = connection_url.getResponseCode();
+            assertEquals(HttpURLConnection.HTTP_OK, status_code);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Then("I get an error code {string}")
+    public void i_get_an_error_code(String string) {
+        // Write code here that turns the phrase above into concrete actions
+        assertEquals(add_status_code,string);
+    }
+
+    @When("I request to add a relationship categories between project {string} and categories {string}")
+    public void i_request_to_add_a_relationship_categories_between_project_and_categories(String string, String string2) {
+        HttpClient poster = HttpClient.newHttpClient();
+        HttpRequest req = HttpRequest.newBuilder().uri(URI.create("http://localhost:4567/projects/"+string+"/categories")).POST(HttpRequest.BodyPublishers.ofString("{\"id\":\""+string2+"\"}")).build();
+        try{
+            HttpResponse<String> response = poster.send(req, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Then("the relationship between project {string} category {string} should be created")
+    public void the_relationship_between_project_category_should_be_created1(String string, String string2) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+
+        try {
+            URL url = new URL("http://localhost:4567/projects/" +string + "/categories");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            int status_code = connection.getResponseCode();
+            if (status_code == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine;
+                StringBuffer content = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    content.append(inputLine);
+                }
+                in.close();
+
+                JSONObject jsonResponse = new JSONObject(content.toString());
+                // Assuming the JSON object has a key called "id" for the ID
+
+// Get the JSON array associated with the key "categories"
+                JSONArray projects = jsonResponse.getJSONArray("categories");
+                String[] id = new String[1];
+// Loop through each object in the JSON array
+                for (int i = 0; i < projects.length(); i++) {
+                    // Get the individual project as a JSONObject
+                    JSONObject project = projects.getJSONObject(i);
+
+                    // Check if the project has an "id" key
+                    if (project.has("id")) {
+                        // Get the value of the "id" field
+                        id[0] = project.getString("id");
+
+                    }
+                }
+
+                // Now you have the ID as a string. To convert it into a JSON object:
+                temp= id[0];
+
+            } else {
+                // Handle error...
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(temp==string2){
+            assertEquals(200, HttpURLConnection.HTTP_OK);
+        }
+
+    }
+
+    @Given("I create a category with title {string}, description {string}")
+    public void i_create_a_category_with_title_description(String string, String string2) {
+        HttpClient poster = HttpClient.newHttpClient();
+
+        // XML data that we want to send
+        String xmlData = """
+            <category>
+                <description> """ + string2 + """
+                </description>
+                <title>""" + string + """
+            </title>
+            </category>""";
+
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:4567/categories")) // Use the correct URL here
+                .header("Content-Type", "application/xml") // Set the header to accept XML
+                .POST(HttpRequest.BodyPublishers.ofString(xmlData)) // Use the XML data as the body of the POST request
+                .build();
+
+        try {
+            // Send the request and receive the response
+            HttpResponse<String> response = poster.send(req, HttpResponse.BodyHandlers.ofString());
+
+            // Get the status code from the response
+            int temp = response.statusCode();
+
+            // Convert the status code to String if needed
+            String add_status_code = Integer.toString(temp);
+
+            // Print out the status code
+            System.out.println("Status code: " + add_status_code);
+
+            // Optionally print the response body
+            System.out.println("Response body: " + response.body());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    String temp1;
+
+    @When("I request to add a relationship categories between project {string} and a non existent category with id {string}")
+    public void i_request_to_add_a_relationship_categories_between_project_and_a_non_existent_category_with_id(String string, String string2) {
+        //        // Write code here that turns the phrase above into concrete actions
+        try{
+            HttpClient poster = HttpClient.newHttpClient();
+            HttpRequest req = HttpRequest.newBuilder().uri(URI.create("http://localhost:4567/projects/"+string+"/categories")).POST(HttpRequest.BodyPublishers.ofString("{\"id\":\""+string2+"\"}")).build();
+            HttpResponse<String> response = poster.send(req, HttpResponse.BodyHandlers.ofString());
+            int temp1 = response.statusCode();
+            add_status_code = Integer.toString(temp1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @When("I request to add a relationship categories between todos {string} and categories {string}")
+    public void i_request_to_add_a_relationship_categories_between_todos_and_categories(String string, String string2) {
+        HttpClient poster = HttpClient.newHttpClient();
+        HttpRequest req = HttpRequest.newBuilder().uri(URI.create("http://localhost:4567/todos/"+string+"/categories")).POST(HttpRequest.BodyPublishers.ofString("{\"id\":\""+string2+"\"}")).build();
+        try{
+            HttpResponse<String> response = poster.send(req, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Then("the relationship between todo {string} category {string} should be created")
+    public void the_relationship_between_todo_category_should_be_created(String string, String string2) {
+
+        try {
+            URL url = new URL("http://localhost:4567/todos/" +string + "/categories");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            int status_code = connection.getResponseCode();
+            if (status_code == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine;
+                StringBuffer content = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    content.append(inputLine);
+                }
+                in.close();
+
+                JSONObject jsonResponse = new JSONObject(content.toString());
+                // Assuming the JSON object has a key called "id" for the ID
+
+// Get the JSON array associated with the key "todos"
+                JSONArray projects = jsonResponse.getJSONArray("categories");
+                String[] id = new String[1];
+// Loop through each object in the JSON array
+                for (int i = 0; i < projects.length(); i++) {
+                    // Get the individual project as a JSONObject
+                    JSONObject project = projects.getJSONObject(i);
+
+                    // Check if the project has an "id" key
+                    if (project.has("id")) {
+                        // Get the value of the "id" field
+                        id[0] = project.getString("id");
+
+                    }
+                }
+
+                // Now you have the ID as a string. To convert it into a JSON object:
+                temp= id[0];
+
+            } else {
+                System.out.print("failed");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(temp==string2){
+            assertEquals(200, HttpURLConnection.HTTP_OK);
+        }
+    }
+
+
+
+    @When("I request to add a relationship categories between todos {string} and a non existent category with id {string}")
+    public void i_request_to_add_a_relationship_categories_between_todos_and_a_non_existent_category_with_id(String string, String string2) {
+
+        try{
+            HttpClient poster = HttpClient.newHttpClient();
+            HttpRequest req = HttpRequest.newBuilder().uri(URI.create("http://localhost:4567/todos/"+string+"/categories")).POST(HttpRequest.BodyPublishers.ofString("{\"id\":\""+string2+"\"}")).build();
+            HttpResponse<String> response = poster.send(req, HttpResponse.BodyHandlers.ofString());
+            int temp = response.statusCode();
+            add_status_code = Integer.toString(temp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @When("I request to add a relationship projects between categories {string} and projects {string}")
+    public void i_request_to_add_a_relationship_projects_between_categories_and_projects(String string, String string2) {
+        HttpClient poster = HttpClient.newHttpClient();
+        HttpRequest req = HttpRequest.newBuilder().uri(URI.create("http://localhost:4567/categories/"+string+"/projects")).POST(HttpRequest.BodyPublishers.ofString("{\"id\":\""+string2+"\"}")).build();
+        try{
+            HttpResponse<String> response = poster.send(req, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    @Then("the relationship between category {string} project {string} should be created")
+    public void the_relationship_between_category_project_should_be_created(String string, String string2) {
+        try {
+            URL url = new URL("http://localhost:4567/categories/" +string + "/projects");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            int status_code = connection.getResponseCode();
+            if (status_code == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine;
+                StringBuffer content = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    content.append(inputLine);
+                }
+                in.close();
+
+                JSONObject jsonResponse = new JSONObject(content.toString());
+                // Assuming the JSON object has a key called "id" for the ID
+
+// Get the JSON array associated with the key "projects"
+                JSONArray projects = jsonResponse.getJSONArray("projects");
+                String[] id = new String[1];
+// Loop through each object in the JSON array
+                for (int i = 0; i < projects.length(); i++) {
+                    // Get the individual project as a JSONObject
+                    JSONObject project = projects.getJSONObject(i);
+
+                    // Check if the project has an "id" key
+                    if (project.has("id")) {
+                        // Get the value of the "id" field
+                        id[0] = project.getString("id");
+
+                    }
+                }
+
+                // Now you have the ID as a string. To convert it into a JSON object:
+                temp= id[0];
+
+            } else {
+                System.out.print("failed");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(temp==string2){
+            assertEquals(200, HttpURLConnection.HTTP_OK);
+        }
+
+    }
+
+    @When("I request to add a relationship projects between category {string} and a non existent project with id {string}")
+    public void i_request_to_add_a_relationship_projects_between_category_and_a_non_existent_project_with_id(String string, String string2) {
+        //        // Write code here that turns the phrase above into concrete actions
+        try{
+            HttpClient poster = HttpClient.newHttpClient();
+            HttpRequest req = HttpRequest.newBuilder().uri(URI.create("http://localhost:4567/categories/"+string+"/projects")).POST(HttpRequest.BodyPublishers.ofString("{\"id\":\""+string2+"\"}")).build();
+            HttpResponse<String> response = poster.send(req, HttpResponse.BodyHandlers.ofString());
+            int temp = response.statusCode();
+            add_status_code = Integer.toString(temp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @When("I request to add a relationship todos between categories {string} and todos {string}")
+    public void i_request_to_add_a_relationship_todos_between_categories_and_todos(String string, String string2) {
+        HttpClient poster = HttpClient.newHttpClient();
+        HttpRequest req = HttpRequest.newBuilder().uri(URI.create("http://localhost:4567/categories/"+string+"/todos")).POST(HttpRequest.BodyPublishers.ofString("{\"id\":\""+string2+"\"}")).build();
+        try{
+            HttpResponse<String> response = poster.send(req, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Then("the relationship between category {string} todo {string} should be created")
+    public void the_relationship_between_category_todo_should_be_created(String string, String string2) {
+
+        try {
+            URL url = new URL("http://localhost:4567/categories/" +string + "/todos");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            int status_code = connection.getResponseCode();
+            if (status_code == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine;
+                StringBuffer content = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    content.append(inputLine);
+                }
+                in.close();
+
+                JSONObject jsonResponse = new JSONObject(content.toString());
+                // Assuming the JSON object has a key called "id" for the ID
+
+// Get the JSON array associated with the key "todos"
+                JSONArray projects = jsonResponse.getJSONArray("todos");
+                String[] id = new String[1];
+// Loop through each object in the JSON array
+                for (int i = 0; i < projects.length(); i++) {
+                    // Get the individual project as a JSONObject
+                    JSONObject project = projects.getJSONObject(i);
+
+                    // Check if the project has an "id" key
+                    if (project.has("id")) {
+                        // Get the value of the "id" field
+                        id[0] = project.getString("id");
+
+                    }
+                }
+
+                // Now you have the ID as a string. To convert it into a JSON object:
+                temp= id[0];
+
+            } else {
+                System.out.print("failed");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(temp==string2){
+            assertEquals(200, HttpURLConnection.HTTP_OK);
+        }
+    }
+
+
+    @Given("I create a todo with title {string}, description {string}")
+    public void i_create_a_todo_with_title_description(String string, String string2) {
+        HttpClient poster = HttpClient.newHttpClient();
+
+        // XML data that we want to send
+        String xmlData = """
+            <todo>
+                <description> """ + string2 + """
+                </description>
+                <title>""" + string + """
+            </title>
+            </todo>""";
+
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:4567/todos")) // Use the correct URL here
+                .header("Content-Type", "application/xml") // Set the header to accept XML
+                .POST(HttpRequest.BodyPublishers.ofString(xmlData)) // Use the XML data as the body of the POST request
+                .build();
+
+        try {
+            // Send the request and receive the response
+            HttpResponse<String> response = poster.send(req, HttpResponse.BodyHandlers.ofString());
+
+            // Get the status code from the response
+            int temp = response.statusCode();
+
+            // Convert the status code to String if needed
+            String add_status_code = Integer.toString(temp);
+
+            // Print out the status code
+            System.out.println("Status code: " + add_status_code);
+
+            // Optionally print the response body
+            System.out.println("Response body: " + response.body());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    @When("I request to add a relationship todos between category {string} and a non existent todo with id {string}")
+    public void i_request_to_add_a_relationship_todos_between_category_and_a_non_existent_todo_with_id(String string, String string2) {
+        //        // Write code here that turns the phrase above into concrete actions
+        try{
+            HttpClient poster = HttpClient.newHttpClient();
+            HttpRequest req = HttpRequest.newBuilder().uri(URI.create("http://localhost:4567/categories/"+string+"/todos")).POST(HttpRequest.BodyPublishers.ofString("{\"id\":\""+string2+"\"}")).build();
+            HttpResponse<String> response = poster.send(req, HttpResponse.BodyHandlers.ofString());
+            int temp = response.statusCode();
+            add_status_code = Integer.toString(temp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    // DELETE TASKSOF TODOS
+
+    @Given("there is a tasksof relationship between todo with id {string} and project with id {string}")
+    public void there_is_a_tasksof_relationship_between_todo_with_id_and_project_with_id(String todoId, String projectId) {
+        Api call = new Api();
+
+        // Send a GET request to retrieve todos with todoId
+        Response getTodo = call.getRequest("todos/" + todoId, "json");
+        boolean tasksofExists = false;
+        try {
+            // Get the response body as a JSON object
+            JSONObject getTodoResponseBody = new JSONObject(getTodo.body().string());
+            // Get the "todos" array from the response body
+            JSONArray todosArray = getTodoResponseBody.getJSONArray("todos");
+            // Get the first element of the "todos" array
+            JSONObject todoObject = todosArray.getJSONObject(0);
+            // Get the "tasksof" array from the todos object
+            JSONArray tasksofArray = todoObject.getJSONArray("tasksof");
+
+            // Loop through the tasksof in the array and check if the specified project exists
+            for (Object obj : tasksofArray) {
+                JSONObject tasksof = (JSONObject) obj;
+                String tasksofIdStr = tasksof.getString("id");
+                if (tasksofIdStr.equals(projectId)) {
+                    // If the todos with the specified id is found, set the flag to true and exit the loop
+                    tasksofExists = true;
+                    break;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // Assert that the specified tasksof exists for given todoId
+        assertTrue( tasksofExists, "ERROR: There are no tasksof relationship for the todo with id " + todoId
+                + " and the project with id " + projectId);
+    }
+
+
+    @When("I request to delete the tasksof relationship between todo with id {string} and project with id {string}")
+    public void i_delete_the_tasksof_relationship_between_todo_with_id_and_project_with_id_using_id_in_endpoint(String todoId, String projectId) {
+        Api call = new Api();
+        response = call.deleteRequest("todos/" + todoId + "/tasksof/" + projectId);
+    }
+
+    @When("I delete the tasksof relationship between todo with id {string} and project with id {string} using put method")
+    public void i_delete_the_tasksof_relationship_between_todo_with_id_and_project_with_id_using_put_method(String todoId, String projectId) {
+        // Create a Api object to handle the API request
+        Api call = new Api();
+
+        // Create a JSON object with an "id" field containing the category id
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("title", "updated todo");
+
+        // Create relationship categories between todos and catagories using a PUT request
+        response = call.putRequest("todos/" + todoId, "json", requestBody);
+    }
+
+    @When("I delete the nonexistent tasksof relationship between todo with id {string} and project with id {string} using id in endpoint")
+    public void i_delete_the_nonexistent_tasksof_relationship_between_todo_with_id_and_project_with_id_using_id_in_endpoint(String todoId, String projectId) {
+        Api call = new Api();
+        response = call.deleteRequest("todos/" + todoId + "/tasksof/" + projectId);
+        try {
+            responseBody = new JSONObject(response.body().string());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    @Then("the tasksof relationship between todo with id {string} and project with id {string} should be deleted")
+    public void the_tasksof_relationship_between_todo_with_id_and_project_with_id_is_deleted(String todoId, String projectId) {
+        Api call = new Api();
+        // Send a GET request to retrieve todos with todoId
+        Response getTodo = call.getRequest("todos/" + todoId, "json");
+        boolean tasksofExists = false;
+        try {
+            // Get the response body as a JSON object
+            JSONObject getTodoResponseBody = new JSONObject(getTodo.body().string());
+            if(!getTodoResponseBody.isNull("tasksof")) {
+                // Get the "tasksof" array from the response body
+                JSONArray tasksofArray = getTodoResponseBody.getJSONArray("tasksof");
+                // Loop through the projects in the array and check if the specified project exists
+                for (Object obj : tasksofArray) {
+                    JSONObject tasksof = (JSONObject) obj;
+                    String tasksofIdStr = tasksof.getString("id");
+                    if (tasksofIdStr.equals(projectId)) {
+                        // If the todos with the specified id is found, set the flag to true and exit the loop
+                        tasksofExists = true;
+                        break;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // Assert that the specified tasksof does not exist
+        assertFalse( tasksofExists, "ERROR: The tasksof relationship exists between todo with id " + todoId + " and project with id" + projectId);
+    }
+
+    @Then("the response body has the error message {string}")
+    public void the_response_body_has_the_error_message(String errorMessage) {
+        //Check that the first key of the response body is "errorMessages"
+        assertEquals("errorMessages", responseBody.keySet().iterator().next(), "\n ERROR: The response body does not have a key \"errorMessage\". \n The response body is : " + responseBody + "\n And should return error message: \n" + errorMessage);
+
+        JSONArray errorMessages = responseBody.getJSONArray("errorMessages");
+        String responseErrorMessage = errorMessages.getString(0);
+        assertEquals(errorMessage, responseErrorMessage, "ERROR: The actual error message does not match the expected error message.");
+
+    }
+
+    @Then("a status code {string} is returned")
+    public void a_status_code_with_response_phrase_is_returned1(String statusCode) {
+        assertEquals(Integer.parseInt(statusCode), response.code());
     }
 
 }

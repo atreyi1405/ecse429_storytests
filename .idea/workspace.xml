@@ -5,19 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="155c9be8-7881-4cb7-9eb8-cdd10145c891" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/ecse429/RunCucumberTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/features/GetCategoryByID.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/features/GetTodoById.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/features/Get_Todo_Categories.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/features/addCategoryToProject.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/features/addCategoryToTodo.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/features/addProjectToCategory.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/features/addToDos_ID_tasksof.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/features/addTodotoCategory.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/features/deletetasksof_todo.feature" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/StepDefinitions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/runcucumbertest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/tests.java" beforeDir="false" afterPath="$PROJECT_DIR$/unit/tests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/example/Api.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Api.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/StepDefinitions.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/tests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/ecse429/RunCucumberTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ecse429/RunCucumberTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/ecse429/StepDefinitions.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ecse429/StepDefinitions.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +50,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/ankur/Desktop/McGill/ecse429_storytests/unit",
+    "last_opened_file_path": "/Users/ankur/Desktop/McGill/ecse429_storytests/src/test/resources/features",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -58,20 +60,79 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/test/resources/features" />
       <recent name="$PROJECT_DIR$/unit" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.RunCucumberTest">
-    <configuration name="Feature: addCategory" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Cucumber Java.Feature: deletetasksof_todo">
+    <configuration name="Feature: addCategoryToTodo" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
       <option name="CUCUMBER_CORE_VERSION" value="5" />
-      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/features/addCategory.feature" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/features/addCategoryToTodo.feature" />
+      <option name="GLUE" value="ecse429" />
       <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
       <module name="ecse429" />
       <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
-      <option name="SUGGESTED_NAME" value="Feature: addCategory" />
+      <option name="SUGGESTED_NAME" value="Feature: addCategoryToTodo" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="io.cucumber.core.cli.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Feature: addProjectToCategory" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+      <option name="CUCUMBER_CORE_VERSION" value="5" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/features/addProjectToCategory.feature" />
+      <option name="GLUE" value="ecse429" />
+      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
+      <module name="ecse429" />
+      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
+      <option name="SUGGESTED_NAME" value="Feature: addProjectToCategory" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="io.cucumber.core.cli.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Feature: addTodotoCategory" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+      <option name="CUCUMBER_CORE_VERSION" value="5" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/features/addTodotoCategory.feature" />
+      <option name="GLUE" value="ecse429" />
+      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
+      <module name="ecse429" />
+      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
+      <option name="SUGGESTED_NAME" value="Feature: addTodotoCategory" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="io.cucumber.core.cli.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Feature: deletetasksof_todo" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+      <option name="CUCUMBER_CORE_VERSION" value="5" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/features/deletetasksof_todo.feature" />
+      <option name="GLUE" value="ecse429" />
+      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
+      <module name="ecse429" />
+      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
+      <option name="SUGGESTED_NAME" value="Feature: deletetasksof_todo" />
       <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
       <extension name="coverage">
         <pattern>
@@ -85,6 +146,12 @@
     </configuration>
     <configuration name="RunCucumberTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ecse429" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ecse429.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <option name="PACKAGE_NAME" value="ecse429" />
       <option name="MAIN_CLASS_NAME" value="ecse429.RunCucumberTest" />
       <option name="TEST_OBJECT" value="class" />
@@ -92,59 +159,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="testcucumber" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ecse429" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value=".*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="testcucumber" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="tests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ecse429" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value=".*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="tests" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="tests.testTodosGet" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ecse429" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value=".*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="tests" />
-      <option name="METHOD_NAME" value="testTodosGet" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Cucumber Java.Feature: deletetasksof_todo" />
         <item itemvalue="JUnit.RunCucumberTest" />
-        <item itemvalue="JUnit.tests" />
-        <item itemvalue="Cucumber Java.Feature: addCategory" />
-        <item itemvalue="JUnit.tests.testTodosGet" />
-        <item itemvalue="JUnit.testcucumber" />
+        <item itemvalue="Cucumber Java.Feature: addTodotoCategory" />
+        <item itemvalue="Cucumber Java.Feature: addProjectToCategory" />
+        <item itemvalue="Cucumber Java.Feature: addCategoryToTodo" />
       </list>
     </recent_temporary>
   </component>
@@ -159,7 +180,7 @@
       <workItem from="1699816131276" duration="1698000" />
       <workItem from="1699817889076" duration="3963000" />
       <workItem from="1699853203556" duration="104000" />
-      <workItem from="1699853851404" duration="5409000" />
+      <workItem from="1699853851404" duration="11768000" />
     </task>
     <servers />
   </component>
