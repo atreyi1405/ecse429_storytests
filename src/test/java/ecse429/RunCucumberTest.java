@@ -1,0 +1,38 @@
+package ecse429;
+
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import org.junit.platform.suite.api.ConfigurationParameter;
+import org.junit.platform.suite.api.IncludeEngines;
+import org.junit.platform.suite.api.SelectClasspathResource;
+import org.junit.platform.suite.api.Suite;
+import org.example.Api;
+
+import static io.cucumber.junit.platform.engine.Constants.PLUGIN_PROPERTY_NAME;
+
+@Suite
+@IncludeEngines("cucumber")
+@SelectClasspathResource("features")
+@ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty")
+public class RunCucumberTest {
+    @Before
+    public static void setupEnvironment() {
+        Runtime runtime = Runtime.getRuntime();
+        try {
+            // Lauch the rest api todos list manager with the command
+            runtime.exec("java -jar runTodoManagerRestAPI-1.5.5.jar");
+            System.out.println("Setting up environment");
+            Thread.sleep(1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @After
+    public static void shutdownEnvironment() {
+        Api call = new Api();
+        System.out.println("Shutdown system");
+        call.getRequest("shutdown", "json");
+    }
+
+
+}
