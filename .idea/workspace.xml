@@ -5,21 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="155c9be8-7881-4cb7-9eb8-cdd10145c891" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/resources/features/GetCategoryByID.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/features/GetTodoById.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/features/Get_Todo_Categories.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/features/addCategoryToProject.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/features/addCategoryToTodo.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/features/addProjectToCategory.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/features/addToDos_ID_tasksof.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/features/addTodotoCategory.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/features/deletetasksof_todo.feature" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Api.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Api.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/ecse429/RunCucumberTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ecse429/RunCucumberTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/features/GetCategoryByID.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/features/GetCategoryByID.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/features/Get_Todo_Categories.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/features/Get_tasks_projectbyid.feature" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/ecse429/StepDefinitions.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ecse429/StepDefinitions.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/features/GetCategoryByID.feature" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/features/GetCategoryByID.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/features/GetTodoById.feature" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/features/GetTodoById.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/features/ViewTodoCategories.feature" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,53 +60,15 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Cucumber Java.Feature: deletetasksof_todo">
-    <configuration name="Feature: addCategoryToTodo" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Cucumber Java.Feature: Get_tasks_projectbyid">
+    <configuration name="Feature: Get_tasks_projectbyid" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
       <option name="CUCUMBER_CORE_VERSION" value="5" />
-      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/features/addCategoryToTodo.feature" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/features/Get_tasks_projectbyid.feature" />
       <option name="GLUE" value="ecse429" />
       <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
       <module name="ecse429" />
       <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
-      <option name="SUGGESTED_NAME" value="Feature: addCategoryToTodo" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="io.cucumber.core.cli.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Feature: addProjectToCategory" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
-      <option name="CUCUMBER_CORE_VERSION" value="5" />
-      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/features/addProjectToCategory.feature" />
-      <option name="GLUE" value="ecse429" />
-      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
-      <module name="ecse429" />
-      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
-      <option name="SUGGESTED_NAME" value="Feature: addProjectToCategory" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="io.cucumber.core.cli.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Feature: addTodotoCategory" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
-      <option name="CUCUMBER_CORE_VERSION" value="5" />
-      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/features/addTodotoCategory.feature" />
-      <option name="GLUE" value="ecse429" />
-      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
-      <module name="ecse429" />
-      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
-      <option name="SUGGESTED_NAME" value="Feature: addTodotoCategory" />
+      <option name="SUGGESTED_NAME" value="Feature: Get_tasks_projectbyid" />
       <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
       <extension name="coverage">
         <pattern>
@@ -144,28 +99,73 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RunCucumberTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="Scenario: Get a nonexistent task (Error Flow)" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+      <option name="CUCUMBER_CORE_VERSION" value="5" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/features/Get_tasks_projectbyid.feature" />
+      <option name="GLUE" value="ecse429" />
+      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
       <module name="ecse429" />
+      <option name="NAME_FILTER" value="^Get a nonexistent task \(Error Flow\)$" />
+      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --name &quot;^Get a nonexistent task \(Error Flow\)$&quot;" />
+      <option name="SUGGESTED_NAME" value="Scenario: Get a nonexistent task (Error Flow)" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="ecse429.*" />
+          <option name="PATTERN" value="io.cucumber.core.cli.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="ecse429" />
-      <option name="MAIN_CLASS_NAME" value="ecse429.RunCucumberTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Scenario: Get a specific tasks by filtering tasks list with id (Alternate Flow)" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+      <option name="CUCUMBER_CORE_VERSION" value="5" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/features/Get_tasks_projectbyid.feature" />
+      <option name="GLUE" value="ecse429" />
+      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
+      <module name="ecse429" />
+      <option name="NAME_FILTER" value="^Get a specific tasks by filtering tasks list with id \(Alternate Flow\)$" />
+      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --name &quot;^Get a specific tasks by filtering tasks list with id \(Alternate Flow\)$&quot;" />
+      <option name="SUGGESTED_NAME" value="Scenario: Get a specific tasks by filtering tasks list with id (Alternate Flow)" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="io.cucumber.core.cli.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Scenario: Retrieve tasks by project identifier (Normal Flow)" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+      <option name="CUCUMBER_CORE_VERSION" value="5" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/features/Get_tasks_projectbyid.feature" />
+      <option name="GLUE" value="ecse429" />
+      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
+      <module name="ecse429" />
+      <option name="NAME_FILTER" value="^Retrieve tasks by project identifier \(Normal Flow\)$" />
+      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --name &quot;^Retrieve tasks by project identifier \(Normal Flow\)$&quot;" />
+      <option name="SUGGESTED_NAME" value="Scenario: Retrieve tasks by project identifier (Normal Flow)" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="io.cucumber.core.cli.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Cucumber Java.Feature: Get_tasks_projectbyid" />
+        <item itemvalue="Cucumber Java.Scenario: Retrieve tasks by project identifier (Normal Flow)" />
+        <item itemvalue="Cucumber Java.Scenario: Get a nonexistent task (Error Flow)" />
+        <item itemvalue="Cucumber Java.Scenario: Get a specific tasks by filtering tasks list with id (Alternate Flow)" />
         <item itemvalue="Cucumber Java.Feature: deletetasksof_todo" />
-        <item itemvalue="JUnit.RunCucumberTest" />
-        <item itemvalue="Cucumber Java.Feature: addTodotoCategory" />
-        <item itemvalue="Cucumber Java.Feature: addProjectToCategory" />
-        <item itemvalue="Cucumber Java.Feature: addCategoryToTodo" />
       </list>
     </recent_temporary>
   </component>
@@ -180,7 +180,7 @@
       <workItem from="1699816131276" duration="1698000" />
       <workItem from="1699817889076" duration="3963000" />
       <workItem from="1699853203556" duration="104000" />
-      <workItem from="1699853851404" duration="11768000" />
+      <workItem from="1699853851404" duration="14798000" />
     </task>
     <servers />
   </component>
@@ -197,5 +197,91 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java</url>
+          <line>1446</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java</url>
+          <line>1451</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java</url>
+          <line>1452</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java</url>
+          <line>1453</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java</url>
+          <line>1454</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java</url>
+          <line>1455</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java</url>
+          <line>1461</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java</url>
+          <line>1462</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java</url>
+          <line>1463</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java</url>
+          <line>1460</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java</url>
+          <line>1469</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java</url>
+          <line>1470</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java</url>
+          <line>1475</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java</url>
+          <line>1476</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java</url>
+          <line>1478</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/ecse429/StepDefinitions.java</url>
+          <line>1477</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

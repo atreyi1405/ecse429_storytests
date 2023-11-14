@@ -6,7 +6,7 @@ Feature: Get Todo By Id
     Given the app is running
 
 
-  Scenario Outline: Retrieve a specific todo item by its identifier (Standard Procedure)
+  Scenario Outline: Retrieve a specific todo item by its identifier (Normal Procedure)
     Given a todo item exists with identifier "<todoId>"
     When I request the todo item with identifier "<todoId>"
     Then the response should include a status code of "200" and title "<title>"

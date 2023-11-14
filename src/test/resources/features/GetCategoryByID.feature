@@ -1,6 +1,6 @@
-Feature: Get Todo By Id
+Feature: Get Categories By Id
   As a user,
-  I want to get a todo by id, so I can edit it, or assign it to projects and categories
+  I want to get a category by id to view.
 
   Background:
     Given the app is running
@@ -26,7 +26,7 @@ Feature: Get Todo By Id
       | 2       |
 
 
-  Scenario Outline: Get a nonexistent todo (Error Flow)
+  Scenario Outline: Get a nonexistent category (Error Flow)
     Given the category list does not contain id "<categoryId>"
     When I request the category item with id "<categoryId>"
     Then a output code of "404" is returned

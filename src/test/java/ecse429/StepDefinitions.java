@@ -1447,4 +1447,52 @@ public class StepDefinitions {
         assertEquals(Integer.parseInt(statusCode), response.code());
     }
 
+    @Given("a project item exists with identifier {string}")
+    public void a_project_item_exists_with_identifier(String string) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        URL url = new URL("http://localhost:4567/projects/"+string);
+        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+        int view_todos_status_code = connection_url.getResponseCode();
+        assertEquals(HttpURLConnection.HTTP_OK, view_todos_status_code);
+    }
+    @When("I request tasks assigned to project with identifier {string}")
+    public void i_request_tasks_assigned_to_project_with_identifier(String string) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        URL url = new URL("http://localhost:4567/projects/"+string+"/tasks");
+        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+        int temp = connection_url.getResponseCode();
+        view_todos_last_status = Integer.toString(temp);
+    }
+
+    @Given("the project list does not contain id needed to check for tasks {string}")
+    public void the_project_list_does_not_contain_id_needed_to_check_for_tasks(String string) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        URL url = new URL("http://localhost:4567/todos/"+string);
+        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+    }
+    @When("I request the project item with id {string}")
+    public void i_request_the_project_item_with_id(String string) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        URL url = new URL("http://localhost:4567/todos/"+string);
+        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+        int temp = connection_url.getResponseCode();
+        view_todos_last_status = Integer.toString(temp);
+    }
+
+    @When("I request a specific task assigned to project by filtering with the requested task id {string}")
+    public void i_request_tasks_assigned_to_project_by_filtering_with_the_requested_id(String string) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        URL url = new URL("http://localhost:4567/projects/"+string+"/tasks?id=1");
+        HttpURLConnection connection_url = (HttpURLConnection) url.openConnection();
+        int temp = connection_url.getResponseCode();
+        view_todos_last_status = Integer.toString(temp);
+    }
+
+    @Then("the response should include a status code of {string}")
+    public void the_response_should_include_a_view_todos_status_code_of1(String string) {
+        // Write code here that turns the phrase above into concrete actions
+        assertEquals(string, view_todos_last_status);
+
+    }
+
 }
